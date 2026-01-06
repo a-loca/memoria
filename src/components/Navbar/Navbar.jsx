@@ -1,9 +1,26 @@
-import React from 'react'
+import React from "react";
+import styles from "./Navbar.module.css";
+import cloud from "../../assets/cloud.svg";
+import { NavLink } from "react-router-dom";
 
 function Navbar() {
   return (
-    <div>Navbar</div>
-  )
+    <header>
+      <div className={styles.container}>
+        <NavLink to="/">
+          <img src={cloud} className={styles.logo} />
+        </NavLink>
+
+        <nav>
+          <div className={styles.links}>
+            <NavLink to="/">Home</NavLink>
+            <NavLink to="/gallery">Gallery</NavLink>
+            <NavLink to="/about">About</NavLink>
+          </div>
+        </nav>
+      </div>
+    </header>
+  );
 }
 
-export default Navbar
+export default Navbar;

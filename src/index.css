@@ -1,6 +1,12 @@
 :root {
   --background-color: #fbf7ef;
-  --foreground-color: #1f1f1f;
+  --foreground-color: #0c0c0c;
+  --outer-margin: 24px;
+
+  --font-weight-medium : 500;
+
+  --font-size-small : 1.5rem;
+
 }
 
 * {

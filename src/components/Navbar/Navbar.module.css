@@ -1,0 +1,30 @@
+.container {
+  /* position: absolute;
+    top: 0; */
+  width: 100%;
+  padding: var(--outer-margin);
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  .logo {
+    width: 90px;
+    height: auto;
+  }
+
+  .links {
+    display: flex;
+    flex-direction: column;
+    row-gap: 6px;
+    text-align: right;
+
+    * {
+      color: var(--foreground-color);
+      font-weight: var(--font-weight-medium);
+      font-size: var(--font-size-small);
+      text-decoration: none;
+    }
+  }
+}
