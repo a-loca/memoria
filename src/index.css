@@ -5,6 +5,7 @@
 
 * {
   font-family: Golos, sans-serif;
+  box-sizing: border-box;
 }
 
 @font-face {
@@ -14,4 +15,64 @@
 
 body {
   margin: 0;
+  padding: 0;
+
+  background-color: var(--background-color);
+}
+
+body::before {
+  position: fixed;
+
+  /* Needed to display the before element*/
+  content: "";
+
+  /* Bigger than viewport to hide the movement */
+  width: 300%;
+  height: 300%;
+  left: -50%;
+  top: -100%;
+
+  /* Needed to be able to interact with the rest of the UI */
+  z-index: -1;
+
+  /* Noise image as background */
+  background-image: url("./assets/noise.png");
+  background-repeat: repeat;
+  opacity: 80%;
+
+  animation: film-grain 20s steps(10) infinite;
+}
+
+@keyframes film-grain {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(-5%, -10%);
+  }
+  20% {
+    transform: translate(-15%, 5%);
+  }
+  30% {
+    transform: translate(7%, -25%);
+  }
+  40% {
+    transform: translate(-5%, 25%);
+  }
+  50% {
+    transform: translate(-15%, 10%);
+  }
+  60% {
+    transform: translate(15%, 0%);
+  }
+  70% {
+    transform: translate(0%, 15%);
+  }
+  80% {
+    transform: translate(3%, 25%);
+  }
+  90% {
+    transform: translate(-10%, 10%);
+  }
 }
