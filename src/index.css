@@ -4,8 +4,9 @@
   --outer-margin: 24px;
 
   --font-weight-medium : 500;
-
   --font-size-small : 1.5rem;
+
+  --ease-custom : cubic-bezier(0.33, 1, 0.68, 1);
 
 }
 
