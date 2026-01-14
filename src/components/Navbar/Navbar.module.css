@@ -1,6 +1,6 @@
 .container {
-  /* position: absolute;
-    top: 0; */
+  position: absolute;
+  top: 0;
   width: 100%;
   padding: var(--outer-margin);
 
@@ -18,12 +18,12 @@
     display: flex;
     flex-direction: column;
     row-gap: 6px;
-    
 
     * {
       color: var(--foreground-color);
       font-weight: var(--font-weight-medium);
       font-size: var(--font-size-small);
+      letter-spacing: var(--letter-spacing);
       text-decoration: none;
       text-align: right;
       justify-content: end;

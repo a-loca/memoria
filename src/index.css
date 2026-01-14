@@ -1,23 +1,41 @@
 :root {
+  /* Colors */
   --background-color: #fbf7ef;
   --foreground-color: #0c0c0c;
+
+  /* Measurements */
   --outer-margin: 24px;
+  --top-margin: 7rem;
 
-  --font-weight-medium : 500;
-  --font-size-small : 1.5rem;
+  /* Fonts */
+  --font-weight-medium: 500;
+  --font-weight-bold: 800;
 
-  --ease-custom : cubic-bezier(0.33, 1, 0.68, 1);
+  --font-size-small: 1.5rem;
+  --font-size-header: 16rem;
 
+  --letter-spacing: -0.03em;
+
+  /* Animations */
+  --ease-custom: cubic-bezier(0.33, 1, 0.68, 1);
 }
 
-* {
-  font-family: Golos, sans-serif;
-  box-sizing: border-box;
+::selection {
+  background-color: var(--foreground-color);
+  color: var(--background-color);
 }
 
 @font-face {
-  font-family: Golos;
+  font-family: "Golos";
   src: url(./assets/fonts/Golos/GolosText-VariableFont.ttf) format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+* {
+  font-family: "Golos", sans-serif;
+  box-sizing: border-box;
 }
 
 body {

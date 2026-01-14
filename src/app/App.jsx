@@ -12,8 +12,8 @@ function App() {
   return (
     <SmoothScroller>
       <Router>
-        <div className={styles.wrapper}>
-          <Navbar />
+        <Navbar />
+        <main>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/gallery" element={<Gallery />} />
@@ -23,7 +23,7 @@ function App() {
             {/* 404 Not Found */}
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </div>
+        </main>
       </Router>
     </SmoothScroller>
   );
