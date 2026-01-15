@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import styles from "./Home.module.css";
-import heroImg from "../../assets/hero_cropped.png";
+import heroImg from "../../assets/hero.png";
 
 function Home() {
-
   return (
     <div className={styles.container}>
       <h1 className={styles.maskedTitle}>MEMORIA</h1>
