@@ -2,13 +2,13 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  padding: var(--top-margin) var(--outer-margin) var(--outer-margin) var(--outer-margin);
+  padding: 6rem var(--outer-margin) var(--outer-margin) var(--outer-margin);
 
   .maskedTitle {
     align-self: center;
 
     /* Font as wide at the window */
-    font-size: 18vw;
+    font-size: var(--font-size-title);
     font-weight: var(--font-weight-bold);
     letter-spacing: var(--letter-spacing);
     line-height: 0.9em;

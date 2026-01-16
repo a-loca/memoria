@@ -7,7 +7,7 @@ function Home() {
     <div className={styles.container}>
       <h1 className={styles.maskedTitle}>MEMORIA</h1>
       <div className={styles.imgWrapper}>
-        <img src={heroImg} />
+        <img src={heroImg} alt="Nostalgic image of a woman looking at a cloudy sunset" />
       </div>
     </div>
   );

@@ -1,0 +1,57 @@
+.container {
+  padding: var(--top-margin) var(--outer-margin) var(--outer-margin) var(--outer-margin);
+
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .imgWrapper{
+        width: 100%;
+        overflow: hidden;
+        max-height: 55vh;
+
+        img{
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+
+    h1 {
+      font-size: var(--font-size-header);
+      letter-spacing: var(--letter-spacing);
+      font-weight: var(--font-weight-bold);
+      margin: 0;
+    }
+  }
+
+  .galleryWrapper {
+
+    margin-top: -14rem;
+
+    .plusMarkers {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: 36px;
+      position: sticky;
+      top: var(--outer-margin);
+
+      svg {
+        &:first-child {
+          grid-column: 1;
+          justify-self: start;
+        }
+
+        &:last-child {
+          grid-column: 12;
+          justify-self: end;
+        }
+      }
+    }
+    
+    .gallery{
+        height: 200vh;
+    }
+  }
+}

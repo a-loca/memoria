@@ -5,14 +5,15 @@
 
   /* Measurements */
   --outer-margin: 24px;
-  --top-margin: 6rem;
+  --top-margin: 9rem;
 
   /* Fonts */
   --font-weight-medium: 500;
   --font-weight-bold: 800;
 
-  --font-size-small: 1.5rem;
-  --font-size-header: 16rem;
+  --font-size-title: 18vw;
+  --font-size-header: clamp(4rem, 13vw + 1.5rem, 17rem);
+  --font-size-small: clamp(1rem, 2vw, 1.5rem);
 
   --letter-spacing: -0.03em;
 
@@ -36,6 +37,20 @@
 * {
   font-family: "Golos", sans-serif;
   box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+span {
+  color: var(--foreground-color);
+}
+
+path {
+  fill: var(--foreground-color);
 }
 
 body {
