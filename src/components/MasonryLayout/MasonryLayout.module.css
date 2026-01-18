@@ -1,0 +1,11 @@
+.masonry{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    img{
+        /* width: 20%;
+        height: auto; */
+    }
+}

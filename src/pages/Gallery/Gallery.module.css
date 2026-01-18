@@ -6,15 +6,15 @@
     flex-direction: column;
     align-items: center;
 
-    .imgWrapper{
-        width: 100%;
-        overflow: hidden;
-        max-height: 55vh;
+    .imgWrapper {
+      width: 100%;
+      overflow: hidden;
+      max-height: 55vh;
 
-        img{
-            width: 100%;
-            object-fit: cover;
-        }
+      img {
+        width: 100%;
+        object-fit: cover;
+      }
     }
 
     h1 {
@@ -25,9 +25,10 @@
     }
   }
 
-  .galleryWrapper {
+  .wrapper {
+    --margin-top: 14rem;
 
-    margin-top: -14rem;
+    margin-top: calc(-1 * var(--margin-top));
 
     .plusMarkers {
       width: 100%;
@@ -49,9 +50,17 @@
         }
       }
     }
-    
-    .gallery{
-        height: 200vh;
+
+    .grid {
+      padding-top: var(--margin-top);
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: 36px;
+
+      .gallery{
+        grid-column-start: 2;
+        grid-column-end: 12;
+      }
     }
   }
 }
