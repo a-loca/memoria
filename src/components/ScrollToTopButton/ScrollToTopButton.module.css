@@ -1,0 +1,11 @@
+button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+
+  span {
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-small);
+    letter-spacing: var(--letter-spacing);
+  }
+}

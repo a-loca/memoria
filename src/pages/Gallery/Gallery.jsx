@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Gallery.module.css";
 import hero from "../../assets/hero2.jpg";
 import PlusMarker from "../../components/PlusMarker/PlusMarker";
 import MasonryLayout from "../../components/MasonryLayout/MasonryLayout";
+import ListLayout from "../../components/ListLayout/ListLayout";
 import useUnsplashPics from "../../hooks/useUnsplashPics";
+import ViewModeSwitcher from "../../components/ViewModeSwitcher/ViewModeSwitcher";
+import ScrollToTopButton from "../../components/ScrollToTopButton/ScrollToTopButton";
 
 function Gallery() {
-  const {pictures} = useUnsplashPics()
+  const { pictures } = useUnsplashPics();
+
+  const modes = [
+    { type: "Grid", id: 0, element: <MasonryLayout pictures={pictures} /> },
+    { type: "List", id: 1, element: <ListLayout pictures={pictures} /> },
+  ];
+  const [currentMode, setCurrentMode] = useState(modes[0].id);
+
   return (
     <div className={styles.container}>
       <div className={styles.hero}>
@@ -24,10 +34,21 @@ function Gallery() {
 
         <div className={styles.grid}>
           <div className={styles.gallery}>
-            <MasonryLayout pictures={pictures} />
+            {modes.find((mode, i) => mode.id === currentMode).element}
+
+            {/* <MasonryLayout pictures={pictures} /> */}
           </div>
         </div>
+
+        <div className={styles.actions}>
+          <div className={styles.switcher}>
+            <ViewModeSwitcher modes={modes} currentMode={currentMode} setCurrentMode={setCurrentMode} />
+          </div>
+
+          <ScrollToTopButton />
+        </div>
       </div>
+      <div style={{ height: "200vh" }} />
     </div>
   );
 }

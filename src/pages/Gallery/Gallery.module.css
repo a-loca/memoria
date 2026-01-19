@@ -27,8 +27,8 @@
 
   .wrapper {
     --margin-top: 14rem;
-
     margin-top: calc(-1 * var(--margin-top));
+    position: relative;
 
     .plusMarkers {
       width: 100%;
@@ -51,13 +51,24 @@
       }
     }
 
+    .actions {
+      position: sticky;
+      bottom: var(--outer-margin);
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: end;
+
+    }
+
     .grid {
       padding-top: var(--margin-top);
       display: grid;
       grid-template-columns: repeat(12, 1fr);
       column-gap: 36px;
+      position: relative;
 
-      .gallery{
+      .gallery {
         grid-column-start: 2;
         grid-column-end: 12;
       }
