@@ -1,31 +1,38 @@
 .list {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  row-gap: 6rem;
+  /* row-gap: 6rem; */
   column-gap: 36px;
   position: relative;
 
-  .highlight {
-    position: fixed;
-    top: 0;
-    left: var(--outer-margin);
-    right: var(--outer-margin);
-    z-index: 1;
-    pointer-events: none;
-    height: 100px;
-    background-color: black;
-    opacity: 0.05;
-  }
-
   .row {
-    display: contents;
-    column-span: all;
-    z-index: 2;
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column-start: 1;
+    grid-column-end: -1;
+
+    position: relative;
 
     font-weight: var(--font-weight-medium);
     letter-spacing: var(--letter-spacing);
 
+    padding: 3rem 0;
+
+    overflow: hidden;
+
+    .highlight {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: -100%;
+      z-index: 1;
+      pointer-events: none;
+      background-color: black;
+      opacity: 0.05;
+    }
+
     .date {
+      z-index: 2;
       grid-column-start: 1;
       grid-column-end: 4;
       display: flex;
@@ -33,9 +40,13 @@
       justify-content: start;
       font-size: 2rem;
       margin-left: 24px;
+
+      opacity: 0;
+      filter: blur(0.25rem);
     }
 
     .description {
+      z-index: 2;
       grid-column-start: 4;
       grid-column-end: 10;
       text-align: center;
@@ -45,6 +56,7 @@
     }
 
     .user {
+      z-index: 2;
       grid-column-start: 10;
       grid-column-end: 13;
       text-align: end;
@@ -54,6 +66,9 @@
 
       font-size: 2rem;
       margin-right: 24px;
+
+      opacity: 0;
+      filter: blur(0.25rem);
     }
   }
 }
