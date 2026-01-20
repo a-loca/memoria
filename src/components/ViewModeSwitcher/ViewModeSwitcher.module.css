@@ -1,25 +1,38 @@
 .switcher {
   display: flex;
   flex-direction: column;
+  align-items: start;
   row-gap: 6px;
 
   button {
     background-color: transparent;
     border: none;
     cursor: pointer;
+    padding: 0;
+    margin: 0;
 
     span {
       font-weight: var(--font-weight-medium);
       font-size: var(--font-size-small);
       letter-spacing: var(--letter-spacing);
       opacity: 0.4;
+
+      transition: opacity 0.4s;
+
+      &::before {
+        content: "•";
+        opacity: 0;
+        margin-right: 0.3em;
+        transition: opacity 0.4s;
+      }
     }
 
     &[data-selected="true"] {
       span {
         opacity: 1;
+
         &::before {
-          content: "-";
+          opacity: 1;
         }
       }
     }

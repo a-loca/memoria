@@ -10,7 +10,7 @@ export default function useUnsplashPics() {
       const data = await UnsplashService.getNextPage();
 
       let pics = [];
-      data.forEach((obj, i) => {
+      data.forEach((obj) => {
         pics.push(Picture.newPicture(obj));
       });
       setPictures(pics);

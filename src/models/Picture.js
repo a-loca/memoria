@@ -11,10 +11,15 @@ class Picture {
   static newPicture(data) {
     return new Picture(
       data.id,
-      data.description,
-      data.created_at,
+      data.alt_description,
+      new Date(data.created_at),
       data.urls,
-      data.user,
+      // user data
+      {
+        id: data.user.id,
+        name: data.user.name,
+        portfolio: data.user.portfolio_url,
+      },
       data.blur_hash
     );
   }

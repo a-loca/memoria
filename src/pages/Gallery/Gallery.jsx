@@ -32,17 +32,20 @@ function Gallery() {
           <PlusMarker />
         </div>
 
-        <div className={styles.grid}>
-          <div className={styles.gallery}>
-            {modes.find((mode, i) => mode.id === currentMode).element}
 
-            {/* <MasonryLayout pictures={pictures} /> */}
-          </div>
+        <div className={styles.content}>
+          {modes.find((mode) => mode.id === currentMode).element}
         </div>
+
+
 
         <div className={styles.actions}>
           <div className={styles.switcher}>
-            <ViewModeSwitcher modes={modes} currentMode={currentMode} setCurrentMode={setCurrentMode} />
+            <ViewModeSwitcher
+              modes={modes}
+              currentMode={currentMode}
+              setCurrentMode={setCurrentMode}
+            />
           </div>
 
           <ScrollToTopButton />

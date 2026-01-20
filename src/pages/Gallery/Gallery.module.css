@@ -61,17 +61,8 @@
 
     }
 
-    .grid {
+    .content{
       padding-top: var(--margin-top);
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      column-gap: 36px;
-      position: relative;
-
-      .gallery {
-        grid-column-start: 2;
-        grid-column-end: 12;
-      }
     }
   }
 }
