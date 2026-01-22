@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { Mesh } from "three";
 import { transformRange } from "../../utils/utils";
 import { useThree, useFrame } from "@react-three/fiber";
 import { lerp } from "../../utils/utils";
@@ -12,12 +11,23 @@ function ListImage({ url }) {
   const { viewport } = useThree();
   const texture = useTexture(url);
 
+  // Deciding fixed height for the image. The width will be computed in
+  // order to keep aspect ratio unchanged
+  const imgHeight = 1;
+
   const uniforms = useRef({
     uTexture: { value: texture },
   });
 
   useEffect(() => {
     uniforms.current.uTexture.value = texture;
+
+    // Scale the plane based on the image ratio
+    // The height is fixed
+    const imageAspect = texture.image.width / texture.image.height;
+    const width = imgHeight * imageAspect;
+
+    mesh.current.scale.set(width, imgHeight, 1);
   }, [url]);
 
   const mouse = useRef({
@@ -63,7 +73,7 @@ function ListImage({ url }) {
       [viewport.height / 2, (-1 * viewport.height) / 2]
     );
 
-    gsap.set(mesh.current.position, { x: coordX, y: coordY });
+    gsap.set(mesh.current.position, { x: coordX, y: coordY - imgHeight });
   });
 
   return (
