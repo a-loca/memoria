@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./ListLayout.module.css";
 import gsap from "gsap";
 import { getFormattedDate } from "../../utils/utils";
@@ -6,6 +6,8 @@ import Scene from "../Scene/Scene";
 import ListImage from "../ListImage/ListImage";
 
 function ListLayout({ pictures }) {
+  const [currentImage, setCurrentImage] = useState();
+
   const prepAnim = (e) => {
     const div = e.currentTarget;
     const rect = div.getBoundingClientRect();
@@ -47,7 +49,7 @@ function ListLayout({ pictures }) {
 
   return (
     <>
-      <Scene model={<ListImage />} />
+      <Scene model={<ListImage url={currentImage} />} />
       <div className={styles.list}>
         {pictures.map((pic) => {
           return (
@@ -55,7 +57,10 @@ function ListLayout({ pictures }) {
               <div
                 key={pic.id}
                 className={styles.row}
-                onMouseEnter={(e) => animateHighlightIn(e)}
+                onMouseEnter={(e) => {
+                  setCurrentImage(pic.urls.small);
+                  animateHighlightIn(e);
+                }}
                 onMouseLeave={(e) => animateHighlightOut(e)}
               >
                 <div className={styles.highlight} />

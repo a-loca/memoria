@@ -4,19 +4,30 @@ import { Mesh } from "three";
 import { transformRange } from "../../utils/utils";
 import { useThree, useFrame } from "@react-three/fiber";
 import { lerp } from "../../utils/utils";
+import { fragment, vertex } from "./shaders";
+import { useTexture } from "@react-three/drei";
 
-function ListImage() {
+function ListImage({ url }) {
   const mesh = useRef();
   const { viewport } = useThree();
+  const texture = useTexture(url);
+
+  const uniforms = useRef({
+    uTexture: { value: texture },
+  });
+
+  useEffect(() => {
+    uniforms.current.uTexture.value = texture;
+  }, [url]);
 
   const mouse = useRef({
     x: 0,
     y: 0,
   });
-  
-  const smoothMouse = useRef({
-    smoothX: 0,
-    smoothY: 0,
+
+  const meshPosition = useRef({
+    meshX: 0,
+    meshY: 0,
   });
 
   useEffect(() => {
@@ -33,36 +44,32 @@ function ListImage() {
 
   useFrame(() => {
     const { x, y } = mouse.current;
-    const { smoothX, smoothY } = smoothMouse.current;
+    const { meshX, meshY } = meshPosition.current;
 
-    const newX = lerp(smoothX, x, 0.05);
-    const newY = lerp(smoothY, y, 0.05);
+    // Moving the mesh towards the mouse using linear interpolation
+    meshPosition.current.meshX = lerp(meshX, x, 0.05);
+    meshPosition.current.meshY = lerp(meshY, y, 0.05);
 
-    smoothMouse.current = {
-      smoothX: newX,
-      smoothY: newY,
-    };
-
+    // From pixel coordinates to cartesian coordinates
     const coordX = transformRange(
-      newX,
+      meshPosition.current.meshX,
       [0, window.innerWidth],
       [(-1 * viewport.width) / 2, viewport.width / 2]
     );
 
     const coordY = transformRange(
-      newY,
+      meshPosition.current.meshY,
       [0, window.innerHeight],
       [viewport.height / 2, (-1 * viewport.height) / 2]
     );
 
-    gsap.set(mesh.current.position, { x: coordX });
-    gsap.set(mesh.current.position, { y: coordY });
+    gsap.set(mesh.current.position, { x: coordX, y: coordY });
   });
 
   return (
     <mesh ref={mesh}>
       <planeGeometry args={[2, 2, 15, 15]} />
-      <meshBasicMaterial color={"red"} />
+      <shaderMaterial vertexShader={vertex} fragmentShader={fragment} uniforms={uniforms.current} />
     </mesh>
   );
 }
