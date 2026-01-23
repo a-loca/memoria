@@ -16,6 +16,7 @@ export function getFormattedDate(date) {
   return months[date.getUTCMonth()] + " " + date.getDate() + ", " + date.getFullYear();
 }
 
+
 export function transformRange(value, from, to) {
   const [from_min, from_max] = from;
   const [to_min, to_max] = to;
@@ -25,5 +26,7 @@ export function transformRange(value, from, to) {
 }
 
 export function lerp(x, y, a) {
+  // Linear interpolation
+  // Brings the value of x an a% amount closer to y
   return x * (1 - a) + y * a;
 }

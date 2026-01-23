@@ -1,8 +1,14 @@
 export const vertex = `
 varying vec2 vUv;
+float PI = 3.14159;
+uniform vec2 uOffset;
+
 void main(){
     vUv = uv;
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    vec3 newPosition = position;
+    newPosition.x += uv.y * uOffset.x * 0.0005;
+    newPosition.y += - uv.x * uOffset.y * 0.0005;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
 }
 `;
 

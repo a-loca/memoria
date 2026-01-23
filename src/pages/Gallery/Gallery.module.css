@@ -37,6 +37,7 @@
       column-gap: 36px;
       position: sticky;
       top: var(--outer-margin);
+      z-index: 2;
 
       svg {
         &:first-child {
@@ -58,11 +59,13 @@
       flex-direction: row;
       justify-content: space-between;
       align-items: end;
+      z-index: 2;
 
     }
 
     .content{
       padding-top: var(--margin-top);
+      z-index: 1;
     }
   }
 }

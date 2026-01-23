@@ -50,6 +50,7 @@ function ListLayout({ pictures }) {
   return (
     <>
       <Scene model={<ListImage url={currentImage} />} />
+
       <div className={styles.list}>
         {pictures.map((pic) => {
           return (

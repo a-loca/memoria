@@ -13,13 +13,16 @@ function ListImage({ url }) {
 
   // Deciding fixed height for the image. The width will be computed in
   // order to keep aspect ratio unchanged
-  const imgHeight = 1;
+  const imgHeight = 1.2;
 
   const uniforms = useRef({
     uTexture: { value: texture },
+    uOffset: { value: { x: 0, y: 0 } },
   });
 
   useEffect(() => {
+    // Updating uniforms passed to the shaders
+    // every time the hovered image changes
     uniforms.current.uTexture.value = texture;
 
     // Scale the plane based on the image ratio
@@ -41,6 +44,8 @@ function ListImage({ url }) {
   });
 
   useEffect(() => {
+    // Tracking mouse pixel coordinates
+
     const handleMouseMove = (e) => {
       mouse.current = {
         x: e.clientX,
@@ -60,6 +65,11 @@ function ListImage({ url }) {
     meshPosition.current.meshX = lerp(meshX, x, 0.05);
     meshPosition.current.meshY = lerp(meshY, y, 0.05);
 
+    // Difference between cursor and mesh to be used in
+    // the deformation of the plane
+    mesh.current.material.uniforms.uOffset.value.x = x - meshX;
+    mesh.current.material.uniforms.uOffset.value.y = y - meshY;
+
     // From pixel coordinates to cartesian coordinates
     const coordX = transformRange(
       meshPosition.current.meshX,
@@ -73,7 +83,7 @@ function ListImage({ url }) {
       [viewport.height / 2, (-1 * viewport.height) / 2]
     );
 
-    gsap.set(mesh.current.position, { x: coordX, y: coordY - imgHeight });
+    gsap.set(mesh.current.position, { x: coordX, y: coordY - imgHeight - 0.2 });
   });
 
   return (
