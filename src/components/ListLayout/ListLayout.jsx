@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import styles from "./ListLayout.module.css";
 import gsap from "gsap";
 import { getFormattedDate } from "../../utils/utils";
-import Scene from "../Scene/Scene";
-import ListImage from "../ListImage/ListImage";
+import FloatingPicture from "../FloatingPicture/FloatingPicture";
 
 function ListLayout({ pictures }) {
   const [currentImage, setCurrentImage] = useState();
@@ -49,8 +48,7 @@ function ListLayout({ pictures }) {
 
   return (
     <>
-      <Scene model={<ListImage url={currentImage} />} />
-
+      <FloatingPicture url={currentImage} />
       <div className={styles.list}>
         {pictures.map((pic) => {
           return (

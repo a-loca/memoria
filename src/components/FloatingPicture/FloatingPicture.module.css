@@ -1,9 +1,7 @@
-.wrapper {
+.floating {
   position: fixed;
-  inset: 0;
-  height: 100%;
-  width: 100%;
+  top: 0;
   z-index: 3;
   pointer-events: none;
-
+  transform-origin: top center;
 }
