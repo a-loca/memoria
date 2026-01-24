@@ -5,7 +5,7 @@ import { getFormattedDate } from "../../utils/utils";
 import FloatingPicture from "../FloatingPicture/FloatingPicture";
 
 function ListLayout({ pictures }) {
-  const [currentImage, setCurrentImage] = useState();
+  const [currentImage, setCurrentImage] = useState(null);
 
   const prepAnim = (e) => {
     const div = e.currentTarget;
@@ -49,7 +49,7 @@ function ListLayout({ pictures }) {
   return (
     <>
       <FloatingPicture url={currentImage} />
-      <div className={styles.list}>
+      <div className={styles.list} onMouseLeave={() => setCurrentImage(null)}>
         {pictures.map((pic) => {
           return (
             pic.description && (

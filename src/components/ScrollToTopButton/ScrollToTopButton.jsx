@@ -4,7 +4,10 @@ import styles from "./ScrollToTopButton.module.css";
 function ScrollToTopButton() {
   return (
     <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-      <span>↑ Back to top</span>
+      <div>
+        <span>↑ Back</span>
+        <span>to top</span>
+      </div>
     </button>
   );
 }

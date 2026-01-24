@@ -1,10 +1,12 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./FloatingPicture.module.css";
 import gsap from "gsap";
 import { lerp } from "../../utils/utils";
 
 function FloatingPicture({ url }) {
   const container = useRef();
+  const [displayedUrl, setDisplayedUrl] = useState();
+
   const mouse = useRef({
     x: 0,
     y: 0,
@@ -32,8 +34,10 @@ function FloatingPicture({ url }) {
     };
 
     const rotationOffset = mouse.current.x - imgPosition.current.x;
+    // Prevent rotation to take place for imperceptible values
+    const clampedRotation = Math.abs(rotationOffset) < 0.01 ? 0 : rotationOffset;
 
-    movePicture(imgPosition.current.x, imgPosition.current.y, rotationOffset);
+    movePicture(imgPosition.current.x, imgPosition.current.y, clampedRotation);
 
     // Animation will be running at each frame
     rafId.current = requestAnimationFrame(animate);
@@ -44,9 +48,8 @@ function FloatingPicture({ url }) {
 
     gsap.set(container.current, {
       x,
-      y,
+      y: y + 15,
       xPercent: -50,
-      yPercent: 5,
       rotate: 0.02 * rotationOffset + "deg",
     });
   };
@@ -61,9 +64,18 @@ function FloatingPicture({ url }) {
     };
   });
 
+  useEffect(() => {
+    if (url) {
+      setDisplayedUrl(url);
+      gsap.to(container.current, { opacity: 1, filter: "blur(0px)", duration: 0.6 });
+    } else {
+      gsap.to(container.current, { opacity: 0, filter: "blur(1em)", duration: 0.6 });
+    }
+  }, [url]);
+
   return (
     <div ref={container} className={styles.floating}>
-      <img src={url} />
+      <img src={displayedUrl} />
     </div>
   );
 }

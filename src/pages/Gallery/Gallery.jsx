@@ -32,12 +32,9 @@ function Gallery() {
           <PlusMarker />
         </div>
 
-
         <div className={styles.content}>
           {modes.find((mode) => mode.id === currentMode).element}
         </div>
-
-
 
         <div className={styles.actions}>
           <div className={styles.switcher}>

@@ -1,11 +1,23 @@
-.masonry{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    flex-wrap: wrap;
+.container {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: 36px;
 
-    img{
-        /* width: 20%;
-        height: auto; */
+  .masonry {
+    grid-column-start: 2;
+    grid-column-end: 12;
+    columns: 400px;
+    column-gap: 2em;
+
+    img {
+      width: 100%;
+      margin-bottom: 1.5em;
+      transition: filter 0.7s;
+      cursor: pointer;
+
+      &:hover{
+        filter: grayscale(1) sepia(0.7) brightness(0.8);
+      }
     }
+  }
 }
