@@ -29,6 +29,9 @@
     --margin-top: 14rem;
     margin-top: calc(-1 * var(--margin-top));
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
     .plusMarkers {
       width: 100%;
@@ -38,6 +41,7 @@
       position: sticky;
       top: var(--outer-margin);
       z-index: 2;
+      pointer-events: none;
 
       svg {
         &:first-child {

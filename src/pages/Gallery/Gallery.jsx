@@ -9,7 +9,7 @@ import ViewModeSwitcher from "../../components/ViewModeSwitcher/ViewModeSwitcher
 import ScrollToTopButton from "../../components/ScrollToTopButton/ScrollToTopButton";
 
 function Gallery() {
-  const { pictures } = useUnsplashPics();
+  const { pictures, loadNext, canDownloadMore } = useUnsplashPics();
 
   const modes = [
     { type: "Grid", id: 0, element: <MasonryLayout pictures={pictures} /> },
@@ -35,6 +35,8 @@ function Gallery() {
         <div className={styles.content}>
           {modes.find((mode) => mode.id === currentMode).element}
         </div>
+
+        {canDownloadMore && <button onClick={() => loadNext()}>Load more images</button>}
 
         <div className={styles.actions}>
           <div className={styles.switcher}>

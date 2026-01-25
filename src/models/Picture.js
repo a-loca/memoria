@@ -11,7 +11,7 @@ class Picture {
   static newPicture(data) {
     return new Picture(
       data.id,
-      data.alt_description,
+      String(data.alt_description).charAt(0).toUpperCase() + String(data.alt_description).slice(1),
       new Date(data.created_at),
       data.urls,
       // user data
