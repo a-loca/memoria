@@ -1,11 +1,11 @@
 class Picture {
-  constructor(id, description, created_at, urls, user, blur_hash) {
+  constructor(id, description, created_at, urls, user, blurhash) {
     this.id = id;
     this.description = description;
     this.created_at = created_at;
     this.urls = urls;
     this.user = user;
-    this.blur_hash = blur_hash;
+    this.blurhash = blurhash;
   }
 
   static newPicture(data) {
