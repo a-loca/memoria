@@ -3,27 +3,29 @@
   grid-template-columns: repeat(12, 1fr);
   column-gap: 36px;
 
-  .masonry {
+  .masonry{
+    /* width: 100%; */
     grid-column-start: 2;
     grid-column-end: 12;
-    columns: 400px;
-    column-gap: 2em;
 
     .imgWrapper {
-      /* width: 100%; */
-      margin-bottom: 1.5em;
-      overflow: hidden;
+    /* margin-bottom: 1.5em; */
+    width: 100%;
+    overflow: hidden;
 
-      img {
-        width: 100%;
-        transition: filter 1s, transform 1s;
-        cursor: pointer;
+    img {
+      width: 100%;
+      transition: filter 1s, transform 1s;
+      cursor: pointer;
 
-        &:hover {
-          filter: grayscale(1) sepia(0.7) brightness(0.8);
-          transform: scale(1.05);
-        }
+      &:hover {
+        filter: grayscale(1) sepia(0.7) brightness(0.8);
+        transform: scale(1.05);
       }
     }
   }
+
+  }
+
+  
 }
