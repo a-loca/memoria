@@ -18,7 +18,6 @@ export default function useUnsplashPics() {
 
     // Create picture objects from the JSON data
     let pics = data.map(Picture.newPicture);
-    console.log(pics.length);
 
     // If the number of returned images is lower than
     // the 30 requested, that means that there are no more

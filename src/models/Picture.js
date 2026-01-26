@@ -1,6 +1,8 @@
 class Picture {
-  constructor(id, description, created_at, urls, user, blurhash) {
+  constructor(id, width, height, description, created_at, urls, user, blurhash) {
     this.id = id;
+    this.width = width;
+    this.height = height;
     this.description = description;
     this.created_at = created_at;
     this.urls = urls;
@@ -11,6 +13,8 @@ class Picture {
   static newPicture(data) {
     return new Picture(
       data.id,
+      data.width,
+      data.height,
       String(data.alt_description).charAt(0).toUpperCase() + String(data.alt_description).slice(1),
       new Date(data.created_at),
       data.urls,
