@@ -7,6 +7,7 @@ import ListLayout from "../../components/ListLayout/ListLayout";
 import useUnsplashPics from "../../hooks/useUnsplashPics";
 import ViewModeSwitcher from "../../components/ViewModeSwitcher/ViewModeSwitcher";
 import ScrollToTopButton from "../../components/ScrollToTopButton/ScrollToTopButton";
+import LoadMoreButton from "../../components/LoadMoreButton/LoadMoreButton";
 
 function Gallery() {
   const { pictures, loadNext, canDownloadMore } = useUnsplashPics();
@@ -36,7 +37,7 @@ function Gallery() {
           {modes.find((mode) => mode.id === currentMode).element}
         </div>
 
-        {canDownloadMore && <button onClick={() => loadNext()}>Load more images</button>}
+        <LoadMoreButton enabled={canDownloadMore} action={loadNext} />
 
         <div className={styles.actions}>
           <div className={styles.switcher}>
