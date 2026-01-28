@@ -1,38 +1,68 @@
 .container {
-  padding: var(--top-margin) var(--outer-margin) var(--outer-margin) var(--outer-margin);
+  padding: 0 var(--outer-margin) var(--outer-margin) var(--outer-margin);
 
   .hero {
+    height: calc(100svh);
+    position: sticky;
+    top: 0;
+    padding-top: var(--top-margin);
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
+    z-index: -1;
 
-    .imgWrapper {
-      width: 100%;
-      overflow: hidden;
-      max-height: 55vh;
+    .title {
+      z-index: 2;
 
-      img {
-        width: 100%;
-        object-fit: cover;
+      h1 {
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 14vw;
+        letter-spacing: var(--letter-spacing);
+        font-weight: var(--font-weight-bold);
+        margin: 0;
+        line-height: 80%;
       }
     }
 
-    h1 {
-      font-size: var(--font-size-header);
-      letter-spacing: var(--letter-spacing);
-      font-weight: var(--font-weight-bold);
-      margin: 0;
+    .heroImg {
+      position: absolute;
+      top: 55%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      height: 60vh;
+      overflow: hidden;
+
+      img {
+        object-fit: cover;
+        height: 100%;
+      }
+    }
+
+    .text {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      p {
+        letter-spacing: var(--letter-spacing);
+        font-weight: var(--font-weight-medium);
+        font-size: var(--font-size-small);
+      }
     }
   }
 
   .wrapper {
-    --margin-top: 14rem;
-    margin-top: calc(-1 * var(--margin-top));
+    --margin-top: 208px;
+    background-color: var(--background-color);
+    /* margin-top: calc(-1 * var(--margin-top)); */
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    row-gap: 64px;
+    /* row-gap: 64px; */
 
     .plusMarkers {
       width: 100%;
@@ -65,11 +95,10 @@
       justify-content: space-between;
       align-items: end;
       z-index: 2;
-
     }
 
-    .content{
-      padding-top: var(--margin-top);
+    .content {
+      /* padding-top: calc(var(--margin-top) / 1.5); */
       z-index: 1;
     }
   }

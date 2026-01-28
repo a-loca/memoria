@@ -12,7 +12,7 @@
   --font-weight-bold: 800;
 
   --font-size-title: 18vw;
-  --font-size-header: clamp(4rem, 13vw + 1.5rem, 17rem);
+  --font-size-header: clamp(4rem, 13vw + 1.5rem, 15rem);
   --font-size-medium: clamp(1.3rem, 1.5vw + 1rem,  3rem);
   --font-size-small: clamp(1rem, 2vw, 1.5rem);
 
@@ -74,7 +74,8 @@ body::before {
   top: -100%;
 
   /* Needed to be able to interact with the rest of the UI */
-  z-index: -1;
+  z-index: 2;
+  pointer-events: none;
 
   /* Noise image as background */
   background-image: url("./assets/noise.png");
