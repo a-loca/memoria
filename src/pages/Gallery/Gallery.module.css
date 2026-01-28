@@ -1,105 +1,65 @@
 .container {
-  padding: 0 var(--outer-margin) var(--outer-margin) var(--outer-margin);
-
-  .hero {
-    height: calc(100svh);
-    position: sticky;
-    top: 0;
-    padding-top: var(--top-margin);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    z-index: -1;
-
-    .title {
-      z-index: 2;
-
-      h1 {
-        text-align: center;
-        text-transform: uppercase;
-        font-size: 14vw;
-        letter-spacing: var(--letter-spacing);
-        font-weight: var(--font-weight-bold);
-        margin: 0;
-        line-height: 80%;
-      }
-    }
-
-    .heroImg {
-      position: absolute;
-      top: 55%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      height: 60vh;
-      overflow: hidden;
-
-      img {
-        object-fit: cover;
-        height: 100%;
-      }
-    }
-
-    .text {
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-
-      p {
-        letter-spacing: var(--letter-spacing);
-        font-weight: var(--font-weight-medium);
-        font-size: var(--font-size-small);
-      }
-    }
-  }
-
-  .wrapper {
-    --margin-top: 208px;
+  .gallery {
     background-color: var(--background-color);
-    /* margin-top: calc(-1 * var(--margin-top)); */
+
     position: relative;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* row-gap: 64px; */
 
-    .plusMarkers {
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      column-gap: 36px;
-      position: sticky;
-      top: var(--outer-margin);
+    padding: var(--outer-margin);
+
+    /* Content that needs to stay in the viewport while scrolling */
+    .wrapper {
+      position: absolute;
+      inset: 0;
       z-index: 2;
-      pointer-events: none;
 
-      svg {
-        &:first-child {
-          grid-column: 1;
-          justify-self: start;
+      .sticky {
+        position: sticky;
+        top: 0;
+
+        height: 100svh;
+        width: 100%;
+
+        padding: var(--outer-margin);
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .plusMarkers {
+          width: 100%;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+
+          svg {
+            height: 120px;
+          }
         }
 
-        &:last-child {
-          grid-column: 12;
-          justify-self: end;
+        .actions {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: end;
         }
       }
     }
 
-    .actions {
-      position: sticky;
-      bottom: var(--outer-margin);
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: end;
+    /* Actual gallery images wrapper */
+    .content {
       z-index: 2;
+      padding-top: 160px;
+      padding-bottom: 64px;
     }
 
-    .content {
-      /* padding-top: calc(var(--margin-top) / 1.5); */
-      z-index: 1;
+    .loadMore {
+      z-index: 2;
+      width: fit-content;
+      margin: 0 auto;
     }
   }
 }

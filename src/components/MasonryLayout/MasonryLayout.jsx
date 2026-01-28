@@ -6,7 +6,7 @@ import { BalancedMasonryGrid as MasonryGrid, Frame } from "@masonry-grid/react";
 function MasonryLayout({ pictures }) {
   return (
     <div className={styles.container}>
-      <MasonryGrid className={styles.masonry} gap={16} frameWidth={400}>
+      <MasonryGrid className={styles.masonry} gap={16} frameWidth={500}>
         {pictures.map((pic) => (
           <Frame key={pic.id} className={styles.frame} width={pic.width} height={pic.height}>
             <div className={styles.imgWrapper}>

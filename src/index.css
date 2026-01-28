@@ -73,8 +73,7 @@ body::before {
   left: -50%;
   top: -100%;
 
-  /* Needed to be able to interact with the rest of the UI */
-  z-index: 2;
+  z-index: 1;
   pointer-events: none;
 
   /* Noise image as background */
