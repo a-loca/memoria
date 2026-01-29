@@ -15,6 +15,7 @@
       position: absolute;
       inset: 0;
       z-index: 2;
+      pointer-events: none;
 
       .sticky {
         position: sticky;
@@ -45,19 +46,20 @@
           flex-direction: row;
           justify-content: space-between;
           align-items: end;
+          pointer-events: auto;
         }
       }
     }
 
     /* Actual gallery images wrapper */
     .content {
-      z-index: 2;
+      z-index: 1;
       padding-top: 160px;
       padding-bottom: 64px;
     }
 
     .loadMore {
-      z-index: 2;
+      z-index: 3;
       width: fit-content;
       margin: 0 auto;
     }
