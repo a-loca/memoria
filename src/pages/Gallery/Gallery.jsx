@@ -3,14 +3,13 @@ import styles from "./Gallery.module.css";
 import PlusMarker from "../../components/PlusMarker/PlusMarker";
 import MasonryLayout from "../../components/MasonryLayout/MasonryLayout";
 import ListLayout from "../../components/ListLayout/ListLayout";
-import useUnsplashPics from "../../hooks/useUnsplashPics";
 import ViewModeSwitcher from "../../components/ViewModeSwitcher/ViewModeSwitcher";
 import ScrollToTopButton from "../../components/ScrollToTopButton/ScrollToTopButton";
 import LoadMoreButton from "../../components/LoadMoreButton/LoadMoreButton";
 import GalleryHero from "../../components/GalleryHero/GalleryHero";
 
-function Gallery() {
-  const { pictures, loadNext, canDownloadMore } = useUnsplashPics();
+function Gallery({pictures, loadNext, canDownloadMore}) {
+  
 
   const modes = [
     { type: "Grid", id: 0, element: <MasonryLayout pictures={pictures} /> },

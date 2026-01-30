@@ -3,6 +3,7 @@ import styles from "./ListLayout.module.css";
 import gsap from "gsap";
 import { getFormattedDate } from "../../utils/utils";
 import FloatingPicture from "../FloatingPicture/FloatingPicture";
+import { NavLink } from "react-router-dom";
 
 function ListLayout({ pictures }) {
   const [currentImage, setCurrentImage] = useState(null);
@@ -69,9 +70,9 @@ function ListLayout({ pictures }) {
                 </div>
 
                 <div className={styles.description}>
-                  <a>
+                  <NavLink to={"/gallery/" + pic.id}>
                     <span className={styles.description}>{pic.description}</span>
-                  </a>
+                  </NavLink>
                 </div>
 
                 <div className={styles.user}>

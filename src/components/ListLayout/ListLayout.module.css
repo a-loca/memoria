@@ -53,6 +53,10 @@
       cursor: pointer;
 
       font-size: var(--font-size-medium);
+
+      a{
+        text-decoration: none;
+      }
     }
 
     .user {
