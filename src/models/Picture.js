@@ -1,16 +1,16 @@
 class Picture {
-  constructor(id, width, height, description, created_at, urls, user, blurhash) {
+  constructor(id, width, height, description, createdAt, urls, user, blurhash) {
     this.id = id;
     this.width = width;
     this.height = height;
     this.description = description;
-    this.created_at = created_at;
+    this.createdAt = createdAt;
     this.urls = urls;
     this.user = user;
     this.blurhash = blurhash;
   }
 
-  static newPicture(data) {
+  static newFromApi(data) {
     return new Picture(
       data.id,
       // Needed for masonry layout computation
@@ -32,7 +32,42 @@ class Picture {
     );
   }
 
-  hasDetails(){
+  static newFromStorage(data) {
+    const picture = new Picture(
+      data.id,
+      data.width,
+      data.height,
+      data.description,
+      data.createdAt,
+      data.urls,
+      data.user,
+      data.blurhash
+    );
+
+    if (data.location != undefined || data.exif != undefined) {
+      picture.location = data.location;
+      picture.exif = data.exif;
+    }
+
+    return picture;
+  }
+
+  toStore(){
+    return {
+      id: this.id,
+      width: this.width,
+      height: this.height,
+      description: this.description,
+      createdAt: this.createdAt,
+      urls: this.urls,
+      user: this.user,
+      blurhash: this.blurhash,
+      location: this.location,
+      exif: this.exif,
+    };
+  }
+
+  hasDetails() {
     // Check if there has already been an API request to fetch
     // additional data
     return this.location != undefined && this.exif != undefined;

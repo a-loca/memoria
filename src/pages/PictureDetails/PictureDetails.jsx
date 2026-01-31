@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
-import NotFound from "../NotFound/NotFound";
 
 function PictureDetails({ getDetails }) {
   const { id } = useParams();
@@ -10,15 +9,13 @@ function PictureDetails({ getDetails }) {
     const fetchData = async () => {
       const picture = await getDetails(id);
 
-      if (!picture) {
-        return <Navigate to={<NotFound />} />;
-      }
-
       setPicture(picture);
     };
 
     fetchData();
-  }, []);
+  }, [id]);
+
+  if (picture == null) return <Navigate to={"/404"} replace />;
 
   return <div>{picture.description ?? "Loading"}</div>;
 }

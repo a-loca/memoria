@@ -8,7 +8,7 @@ function NotFound() {
   const plane1 = useRef();
   const plane2 = useRef();
   const plane3 = useRef();
-  
+
   const speedX = 0.004;
   const speedY = 0.002;
 
@@ -37,8 +37,8 @@ function NotFound() {
     animate();
     window.addEventListener("mousemove", handleMouseMove);
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
       cancelAnimationFrame(rafId);
+      window.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
 
