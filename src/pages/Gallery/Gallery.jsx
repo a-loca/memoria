@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "./Gallery.module.css";
+import cloud from "../../assets/cloud.svg"
 import PlusMarker from "../../components/PlusMarker/PlusMarker";
 import MasonryLayout from "../../components/MasonryLayout/MasonryLayout";
 import ListLayout from "../../components/ListLayout/ListLayout";
@@ -8,13 +9,12 @@ import ScrollToTopButton from "../../components/ScrollToTopButton/ScrollToTopBut
 import LoadMoreButton from "../../components/LoadMoreButton/LoadMoreButton";
 import GalleryHero from "../../components/GalleryHero/GalleryHero";
 
-function Gallery({pictures, loadNext, canDownloadMore}) {
-  
-
+function Gallery({ pictures, loadNext, canDownloadMore }) {
   const modes = [
     { type: "Grid", id: 0, element: <MasonryLayout pictures={pictures} /> },
     { type: "List", id: 1, element: <ListLayout pictures={pictures} /> },
   ];
+
   const [currentMode, setCurrentMode] = useState(modes[0].id);
 
   return (
@@ -42,13 +42,21 @@ function Gallery({pictures, loadNext, canDownloadMore}) {
           </div>
         </div>
 
-        <div className={styles.content}>
-          {modes.find((mode) => mode.id === currentMode).element}
-        </div>
-
-        <div className={styles.loadMore}>
-          <LoadMoreButton enabled={canDownloadMore} action={loadNext} />
-        </div>
+        {!pictures || pictures.length === 0 ? (
+          <div className={styles.error}>
+            <p>Something went wrong, try again.</p>
+            <img src={cloud} alt="Cloud"/>
+          </div>
+        ) : (
+          <>
+            <div className={styles.content}>
+              {modes.find((mode) => mode.id === currentMode).element}
+            </div>
+            <div className={styles.loadMore}>
+              <LoadMoreButton enabled={canDownloadMore} action={loadNext} />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

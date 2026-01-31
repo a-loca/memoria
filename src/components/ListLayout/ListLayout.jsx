@@ -66,7 +66,7 @@ function ListLayout({ pictures }) {
                 <div className={styles.highlight} />
 
                 <div className={styles.date}>
-                  <span>{getFormattedDate(pic.created_at)}</span>
+                  <span>{getFormattedDate(pic.createdAt)}</span>
                 </div>
 
                 <div className={styles.description}>

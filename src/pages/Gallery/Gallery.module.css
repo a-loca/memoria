@@ -10,6 +10,8 @@
 
     padding: var(--outer-margin);
 
+    min-height: 100svh;
+
     /* Content that needs to stay in the viewport while scrolling */
     .wrapper {
       position: absolute;
@@ -56,6 +58,33 @@
       z-index: 1;
       padding-top: 160px;
       padding-bottom: 64px;
+    }
+
+    .error{
+      z-index: 0;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-content: center;
+
+      p{
+        font-weight: var(--font-weight-medium);
+        font-size: var(--font-size-medium);
+        letter-spacing: var(--letter-spacing);
+      }
+
+      img{
+        z-index: -1;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -55%);
+        opacity: 0.1;
+        filter: blur(0.1em);
+        width: 40%;
+      }
+
     }
 
     .loadMore {

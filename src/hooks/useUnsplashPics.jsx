@@ -3,9 +3,28 @@ import UnsplashService from "../services/UnsplashService";
 import Picture from "../models/Picture";
 
 export default function useUnsplashPics() {
-  const [pictures, setPictures] = useState([]);
-  const [canDownloadMore, setCanDownloadMore] = useState(true);
-  const page = useRef(1);
+  const [pictures, setPictures] = useState(() => {
+    // Initialize pictures with data read from session storage
+    // if present, otherwise empty array and another useEffect
+    // will populate the list
+    const stored = sessionStorage.getItem("pictures");
+    if (!stored) return [];
+    return JSON.parse(stored).map(Picture.newFromStorage);
+  });
+
+  const [canDownloadMore, setCanDownloadMore] = useState(() => {
+    // Load value from session storage, otherwise it must
+    // mean that there haven't been any requests for additional
+    // pages to the API yet and there are more to be downloaded
+    const stored = sessionStorage.getItem("canDownloadMore");
+    return stored ? JSON.parse(stored) : true;
+  });
+
+  // If there isn't a stored value, it means that
+  // the app has just started, which means that
+  // no request for new pages has been sent yet, so
+  // the current page can be the first
+  const page = useRef(parseInt(sessionStorage.getItem("page")) || 1);
 
   const loadNext = () => {
     // On click even handler for requesting more pictures
@@ -16,6 +35,8 @@ export default function useUnsplashPics() {
 
   const getNextPage = async (append = true, page) => {
     // Get JSON data from API
+    // If no data is fetched, the pictures list will stay
+    // empty and the view will handle it by showing an appropriate message
     const data = await UnsplashService.getNextPage(page);
 
     // Create picture objects from the JSON data
@@ -26,75 +47,77 @@ export default function useUnsplashPics() {
     // images to be downloaded
     if (pics.length < 30) {
       setCanDownloadMore(false);
-      sessionStorage.setItem("canDownloadMore", false);
     }
 
-    setPictures((prev) => {
-      if (append) {
-        // Append pics to session storage
-        const newPics = prev.concat(pics);
-        sessionStorage.setItem("pictures", JSON.stringify(newPics.map((p) => p.toStore())));
-        return newPics;
-      } else {
-        // Save the new fetched images in the session storage
-        sessionStorage.setItem("pictures", JSON.stringify(pics.map((p) => p.toStore())));
-        return pics;
-      }
-    });
+    setPictures((prev) => (append ? prev.concat(pics) : pics));
   };
 
   useEffect(() => {
     // Load the initial page
     const initialFetch = async () => {
-      // If data is present in the session storage, restore it
-      // and the latest requested page
-      if (
-        sessionStorage.getItem("pictures") &&
-        sessionStorage.getItem("page") &&
-        sessionStorage.getItem("canDownloadMore")
-      ) {
-        // Restore the pics
-        const rawPics = JSON.parse(sessionStorage.getItem("pictures"));
+      // If the data is present in the storage, it has already
+      // been loaded when the state was created,
+      // which means that there's no need for an API call
+      if (pictures.length > 0) return;
 
-        const pics = rawPics.map(Picture.newFromStorage);
-        setPictures(pics);
+      // Fetch first page from API and save in the storage
+      await getNextPage(false, 1);
 
-        // Restore latest fetched page
-        page.current = parseInt(sessionStorage.getItem("page"));
-
-        setCanDownloadMore(JSON.parse(sessionStorage.getItem("canDownloadMore")));
-      } else {
-        // Fetch first page from API and save in the storage
-        await getNextPage(false, 1);
-        page.current = 2;
-        sessionStorage.setItem("page", 2);
-        sessionStorage.setItem("canDownloadMore", true);
-      }
+      // Start counting from the next page and save it into storage
+      page.current = 2;
+      sessionStorage.setItem("page", 2);
     };
 
     initialFetch();
   }, []);
 
+  useEffect(() => {
+    // If the list is null or empty, there's no need
+    // to back it up in the storage
+    if (!pictures || pictures.length < 1) return;
+
+    // Every time the list of pictures changes, update the session storage
+    sessionStorage.setItem("pictures", JSON.stringify(pictures.map((p) => p.toStore())));
+  }, [pictures]);
+
+  useEffect(() => {
+    // Update the session storage every time the state changes
+    sessionStorage.setItem("canDownloadMore", canDownloadMore);
+  }, [canDownloadMore]);
+
   const getDetails = async (id) => {
     // Find picture in the collection
-    const picture = pictures.find((pic) => pic.id === id);
+    let picture = pictures.find((pic) => pic.id === id);
 
-    if (!picture) return;
+    // If the picture exists in the already downloaded list
+    if (picture) {
+      // Check if the picture already has the details
+      if (picture.hasDetails()) return picture;
 
-    // Check if details have already been downloaded
-    // If so, return the object
-    if (picture.hasDetails()) return picture;
+      // If the picture does not have the details, fetch them
+      const details = await UnsplashService.getPictureDetails(id);
 
-    // Get more details about the picture
-    const details = await UnsplashService.getPictureDetails(id);
+      // Add retrieved data to the object
+      picture.addDetails(details);
 
-    // Add the details to the collection
-    picture.addDetails(details);
+      // Save the data in the list
+      setPictures((prev) => prev.map((p) => (p.id === id ? picture : p)));
 
-    // TODO: UPDATE THE LIST OF PICTURES
+      return picture;
+    } else {
+      // If the picture is not in the downloaded list, check
+      // if it actually exists by sending the request
+      const fullData = await UnsplashService.getPictureDetails(id);
 
-    // Return the picture that now has the additional info
-    return picture;
+      // If it does not exist, return null and the page will redirect to 404
+      if (!fullData) return null;
+
+      // If the details exist, create the object using that data and send it back
+      const newPic = Picture.newFromApi(fullData);
+      newPic.addDetails(fullData);
+
+      return newPic;
+    }
   };
 
   return { pictures, loadNext, canDownloadMore, getDetails };
