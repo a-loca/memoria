@@ -16,7 +16,6 @@ export function getFormattedDate(date) {
   return months[date.getUTCMonth()] + " " + date.getDate() + ", " + date.getFullYear();
 }
 
-
 export function transformRange(value, from, to) {
   const [from_min, from_max] = from;
   const [to_min, to_max] = to;

@@ -38,7 +38,7 @@ class Picture {
       data.width,
       data.height,
       data.description,
-      data.createdAt,
+      new Date(data.createdAt),
       data.urls,
       data.user,
       data.blurhash
@@ -52,7 +52,7 @@ class Picture {
     return picture;
   }
 
-  toStore(){
+  toStore() {
     return {
       id: this.id,
       width: this.width,
