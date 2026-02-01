@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styles from "./Gallery.module.css";
-import cloud from "../../assets/cloud.svg"
 import PlusMarker from "../../components/PlusMarker/PlusMarker";
 import MasonryLayout from "../../components/MasonryLayout/MasonryLayout";
 import ListLayout from "../../components/ListLayout/ListLayout";
@@ -8,6 +7,7 @@ import ViewModeSwitcher from "../../components/ViewModeSwitcher/ViewModeSwitcher
 import ScrollToTopButton from "../../components/ScrollToTopButton/ScrollToTopButton";
 import LoadMoreButton from "../../components/LoadMoreButton/LoadMoreButton";
 import GalleryHero from "../../components/GalleryHero/GalleryHero";
+import ErrorScreen from "../../components/ErrorScreen/ErrorScreen";
 
 function Gallery({ pictures, loadNext, canDownloadMore }) {
   const modes = [
@@ -43,10 +43,7 @@ function Gallery({ pictures, loadNext, canDownloadMore }) {
         </div>
 
         {!pictures || pictures.length === 0 ? (
-          <div className={styles.error}>
-            <p>Something went wrong, try again.</p>
-            <img src={cloud} alt="Cloud"/>
-          </div>
+          <ErrorScreen />
         ) : (
           <>
             <div className={styles.content}>

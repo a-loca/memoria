@@ -1,0 +1,23 @@
+.loading {
+  height: 100%;
+  width: 100%;
+  position: relative;
+
+  .spinner {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-49%, -50%);
+  }
+
+  img {
+    z-index: -1;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -55%);
+    opacity: 0.1;
+    filter: blur(0.1em);
+    width: 350px;
+  }
+}

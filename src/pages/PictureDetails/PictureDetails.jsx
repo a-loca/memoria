@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
+import styles from "./PictureDetails.module.css";
+import LoadingScreen from "../../components/LoadingScreen/LoadingScreen";
 
 function PictureDetails({ getDetails }) {
   const { id } = useParams();
@@ -17,7 +19,11 @@ function PictureDetails({ getDetails }) {
 
   if (picture == null) return <Navigate to={"/404"} replace />;
 
-  return <div>{picture.description ?? "Loading"}</div>;
+  return (
+    <div className={styles.container}>
+      <LoadingScreen/>
+    </div>
+  );
 }
 
 export default PictureDetails;

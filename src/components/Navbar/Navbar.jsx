@@ -7,7 +7,7 @@ import HoverAnimatedText from "../HoverAnimatedText/HoverAnimatedText";
 function Navbar() {
   return (
     <header>
-      <div className={styles.container}>
+      <div className={styles.navbar}>
         <NavLink to="/">
           <img src={cloud} alt="A clouds as logo" className={styles.logo} />
         </NavLink>
