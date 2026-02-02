@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import styles from "./PictureDetails.module.css";
 import LoadingScreen from "../../components/LoadingScreen/LoadingScreen";
-import example from "../../assets/gallery_hero.jpg";
+import PictureScroller from "../../components/PictureScroller/PictureScroller";
 
 function PictureDetails({ getDetails }) {
   const { id } = useParams();
@@ -51,15 +51,7 @@ function PictureDetails({ getDetails }) {
         </dl>
       </div>
       <div className={styles.rightContent}>
-        <div className={styles.pics}>
-          {[...new Array(20)].map((_, i) => {
-            return (
-              <div className={styles.picWrapper} key={i}>
-                <img src={example} />
-              </div>
-            );
-          })}
-        </div>
+        <PictureScroller />
       </div>
     </div>
   );

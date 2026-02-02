@@ -38,27 +38,11 @@
   }
 
   .rightContent {
+    position: relative;
+
     grid-column-start: 10;
     grid-column-end: 12;
     height: 100%;
     overflow: hidden;
-
-    .pics {
-      display: flex;
-      flex-direction: column;
-      row-gap: 1em;
-      align-items: center;
-
-      .picWrapper {
-        width: 5em;
-        height: 7em;
-
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-      }
-    }
   }
 }

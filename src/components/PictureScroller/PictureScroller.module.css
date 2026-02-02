@@ -1,0 +1,36 @@
+.wrapper {
+  --pic-width: 80px;
+  --pic-height: 80px;
+
+  .pics {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+    align-items: center;
+
+    .picWrapper {
+      width: var(--pic-width);
+      height: var(--pic-height);
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  .frame {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    height: calc(var(--pic-height) + 20px);
+    width: calc(var(--pic-width) + 20px);
+
+    border: 4px solid var(--foreground-color);
+    opacity: 0.2;
+    z-index: -1;
+  }
+}
