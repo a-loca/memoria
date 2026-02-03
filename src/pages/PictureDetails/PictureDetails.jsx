@@ -4,7 +4,7 @@ import styles from "./PictureDetails.module.css";
 import LoadingScreen from "../../components/LoadingScreen/LoadingScreen";
 import PictureScroller from "../../components/PictureScroller/PictureScroller";
 
-function PictureDetails({ getDetails }) {
+function PictureDetails({ getDetails, pictures }) {
   const { id } = useParams();
   const [picture, setPicture] = useState({});
 
@@ -51,7 +51,7 @@ function PictureDetails({ getDetails }) {
         </dl>
       </div>
       <div className={styles.rightContent}>
-        <PictureScroller />
+        <PictureScroller pictures={pictures} />
       </div>
     </div>
   );
