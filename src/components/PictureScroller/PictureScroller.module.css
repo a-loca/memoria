@@ -1,6 +1,8 @@
 .wrapper {
   --pic-width: 100px;
   --pic-height: 100px;
+  height: 100svh;
+  position: relative;
 
   .pics {
     display: flex;
@@ -25,6 +27,10 @@
         img {
           filter: grayscale(1) sepia(0.7) brightness(0.8);
         }
+
+        .overlay {
+          opacity: 0.3;
+        }
       }
     }
   }
@@ -41,5 +47,33 @@
     border: 4px solid var(--foreground-color);
     opacity: 0.2;
     z-index: -1;
+  }
+
+  .blur {
+    z-index: 0;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    background-color: var(--background-color);
+
+    mask-image: linear-gradient(
+      to bottom,
+      black 0%,
+      black 10%,
+      transparent 30%,
+      transparent 70%,
+      black 90%,
+      black 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      black 0%,
+      black 10%,
+      transparent 30%,
+      transparent 70%,
+      black 90%,
+      black 100%
+    );
   }
 }

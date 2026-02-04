@@ -1,11 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "./PictureScroller.module.css";
 import gsap from "gsap";
 import { lerp } from "../../utils/utils";
 
-function PictureScroller({ pictures }) {
-  const [currentPic, setCurrentPic] = useState();
-
+function PictureScroller({ pictures, currentPic, onSelectPic }) {
   const container = useRef();
   const pics = useRef([]);
   const picHeight = useRef();
@@ -54,7 +52,8 @@ function PictureScroller({ pictures }) {
 
     gsap.set(container.current, { y: currentY.current });
 
-    changeCurrentPic();
+    // TODO: fix this, when not scrolling it keeps calling for navigation
+    if (Math.abs(currentY.current - targetY.current) < 0.01) changeCurrentPic();
 
     rafId.current = requestAnimationFrame(animate);
   };
@@ -62,11 +61,17 @@ function PictureScroller({ pictures }) {
   const changeCurrentPic = () => {
     const rect = container.current.getBoundingClientRect();
     const fromTop = rect.top - window.innerHeight / 2;
-    setCurrentPic(-Math.trunc(fromTop / picStride.current));
+    const index = -Math.trunc(fromTop / picStride.current);
+
+    const newPic = pictures.find((pic, i) => i === index);
+
+    if (newPic.id != currentPic.id) {
+      // setCurrentPic(newPic);
+      onSelectPic(newPic.id);
+    }
   };
 
   useEffect(() => {
-    animate();
     document.addEventListener("wheel", handleScroll, { passive: false });
 
     // Get pic height and margin between pics
@@ -75,20 +80,24 @@ function PictureScroller({ pictures }) {
     picHeight.current = first.height;
     picStride.current = second.top - first.top;
 
+    animate();
+
     return () => {
       cancelAnimationFrame(rafId.current);
       document.removeEventListener("wheel", handleScroll);
     };
   }, []);
 
-  const handleClick = (i) => {
-    const picRect = pics.current[i].getBoundingClientRect();
+  const handleClick = (index) => {
+    const picRect = pics.current[index].getBoundingClientRect();
     const center = picRect.top + picRect.height / 2;
-    const containerRect = container.current.getBoundingClientRect();
 
     targetY.current = targetY.current + (window.innerHeight / 2 - center);
 
-    setCurrentPic(i);
+    const pic = pictures.find((_, i) => i === index);
+    onSelectPic(pic.id);
+
+    // setCurrentPic(pictures.find((_, i) => i === index));
   };
 
   return (
@@ -101,7 +110,7 @@ function PictureScroller({ pictures }) {
               className={styles.picWrapper}
               key={pic.id}
               onClick={() => handleClick(i)}
-              data-selected={i === currentPic}
+              data-selected={pic.id === currentPic.id}
             >
               <img src={pic.urls.thumb} alt={pic.description} />
             </div>
@@ -109,6 +118,7 @@ function PictureScroller({ pictures }) {
         })}
       </div>
       <div className={styles.frame} />
+      <div className={styles.blur} />
     </div>
   );
 }

@@ -77,6 +77,17 @@ class Picture {
     this.location = details.location;
     this.exif = details.exif;
   }
+
+  getEXIFString() {
+    let string = "";
+    if (this.exif.iso) string += "ISO " + this.exif.iso + " · ";
+    if (this.exif.exposure_time) string += this.exif.exposure_time + "s · ";
+    if(this.exif.aperture) string += this.exif.aperture + " · ";
+    if(this.exif.focal_length) string += this.exif.focal_length;
+
+    if(string.length === 0) return null;
+    return string;
+  }
 }
 
 export default Picture;

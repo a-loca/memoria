@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import styles from "./PictureDetails.module.css";
 import LoadingScreen from "../../components/LoadingScreen/LoadingScreen";
 import PictureScroller from "../../components/PictureScroller/PictureScroller";
 
 function PictureDetails({ getDetails, pictures }) {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [picture, setPicture] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
       const picture = await getDetails(id);
-
       setPicture(picture);
     };
 
@@ -27,31 +27,39 @@ function PictureDetails({ getDetails, pictures }) {
   return (
     <div className={styles.container}>
       <div className={styles.leftContent}>
-        <p>{picture.description}</p>
+        <p>{picture.description ?? "Unavailable"}</p>
         <dl>
           <div>
             <dt>Photographer</dt>
-            <dd>{picture.user.name}</dd>
+            <dd>{picture.user.name ?? "Unavailable"}</dd>
           </div>
 
           <div>
             <dt>Location</dt>
-            <dd>Kyoto, Japan</dd>
+            <dd>{picture.location.name ?? "Unavailable"}</dd>
           </div>
 
           <div>
             <dt>EXIF</dt>
-            <dd>ISO 100 · 1/125 s · f/2.8 · 50 mm</dd>
+            <dd>{picture.getEXIFString() ?? "Unavailable"}</dd>
           </div>
 
           <div>
             <dt>Shot On</dt>
-            <dd>Canon E0S 40 D</dd>
+            <dd>{picture.exif.name ?? "Unavailable"}</dd>
           </div>
         </dl>
       </div>
+      <div className={styles.centerContent}>
+        {/* TODO: POLAROID   */}
+        <img src={picture.urls.regular} />
+      </div>
       <div className={styles.rightContent}>
-        <PictureScroller pictures={pictures} />
+        <PictureScroller
+          pictures={pictures}
+          currentPic={picture}
+          onSelectPic={(id) => navigate(`/gallery/${id}`)}
+        />
       </div>
     </div>
   );
