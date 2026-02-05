@@ -10,7 +10,6 @@ class UnsplashService {
   static getNextPage(page = 1) {
     const numPicsPerPage = 30; // always request max number of images
     const url = this._buildRequestURL(this.COLLECTION_ID, numPicsPerPage, page, this.ACCESS_KEY);
-    console.log(url);
 
     return this._send_request(url);
   }

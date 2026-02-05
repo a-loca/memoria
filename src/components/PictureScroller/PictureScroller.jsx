@@ -4,20 +4,42 @@ import gsap from "gsap";
 import { lerp } from "../../utils/utils";
 
 function PictureScroller({ pictures, currentPic, onSelectPic }) {
+  // Ref to container that needs to be moved
   const container = useRef();
+
+  // The wrappers of the pictures
   const pics = useRef([]);
+
+  // Height of one pic
   const picHeight = useRef();
+
+  // Pixel space between centers of sequential pics
   const picStride = useRef();
 
+  // Currently selected picture ID
+  const currentId = useRef(currentPic.id);
+
+  // Scroll speed
   const speed = 0.5;
 
+  // The Y coordinate the pics container needs to be moved to
+  // based on the scroll the user made
   const targetY = useRef(0);
+
+  // The actual Y value of the container used to animate
+  // with linear interpolation with respect to the target
+  // Y goal
   const currentY = useRef(0);
 
+  // ID of the current animation loop
   const rafId = useRef();
+
+  const hasSettled = useRef(true);
 
   const handleScroll = (e) => {
     e.preventDefault();
+
+    hasSettled.current = false;
 
     const rect = container.current.getBoundingClientRect();
     const centerWindow = window.innerHeight / 2;
@@ -48,25 +70,31 @@ function PictureScroller({ pictures, currentPic, onSelectPic }) {
   };
 
   const animate = () => {
+    // Gradually move the current Y value of the container
+    // towards the target Y coordinate it needs to reach
     currentY.current = lerp(currentY.current, targetY.current, 0.05);
 
+    // Animate position of the container
     gsap.set(container.current, { y: currentY.current });
 
-    // TODO: fix this, when not scrolling it keeps calling for navigation
-    if (Math.abs(currentY.current - targetY.current) < 0.01) changeCurrentPic();
+    if (Math.abs(currentY.current - targetY.current) < 0.1 && !hasSettled.current) {
+      hasSettled.current = true;
+      changeCurrentPic();
+    }
 
     rafId.current = requestAnimationFrame(animate);
   };
 
   const changeCurrentPic = () => {
+    console.log("changeCurrentPic");
     const rect = container.current.getBoundingClientRect();
     const fromTop = rect.top - window.innerHeight / 2;
     const index = -Math.trunc(fromTop / picStride.current);
 
-    const newPic = pictures.find((pic, i) => i === index);
+    const newPic = pictures[index];
 
-    if (newPic.id != currentPic.id) {
-      // setCurrentPic(newPic);
+    if (newPic.id != currentId.current) {
+      currentId.current = newPic.id;
       onSelectPic(newPic.id);
     }
   };
@@ -77,9 +105,16 @@ function PictureScroller({ pictures, currentPic, onSelectPic }) {
     // Get pic height and margin between pics
     const first = pics.current[0].getBoundingClientRect();
     const second = pics.current[1].getBoundingClientRect();
+
     picHeight.current = first.height;
     picStride.current = second.top - first.top;
 
+    // Position container so that the selected picture is centered
+    const index = pictures.findIndex((p) => currentPic.id === p.id);
+    targetY.current = -index * picStride.current + window.innerHeight / 2 - picHeight.current / 2;
+    currentY.current = targetY.current;
+
+    // Start the smooth animation loop
     animate();
 
     return () => {
@@ -94,10 +129,9 @@ function PictureScroller({ pictures, currentPic, onSelectPic }) {
 
     targetY.current = targetY.current + (window.innerHeight / 2 - center);
 
-    const pic = pictures.find((_, i) => i === index);
-    onSelectPic(pic.id);
+    const pic = pictures[index];
 
-    // setCurrentPic(pictures.find((_, i) => i === index));
+    onSelectPic(pic.id);
   };
 
   return (
@@ -117,8 +151,12 @@ function PictureScroller({ pictures, currentPic, onSelectPic }) {
           );
         })}
       </div>
-      <div className={styles.frame} />
-      <div className={styles.blur} />
+      <div className={styles.frame}>
+        <span />
+        <span />
+        <span />
+        <span />
+      </div>
     </div>
   );
 }
