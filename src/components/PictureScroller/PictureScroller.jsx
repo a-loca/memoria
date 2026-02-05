@@ -2,8 +2,9 @@ import React, { useEffect, useRef } from "react";
 import styles from "./PictureScroller.module.css";
 import gsap from "gsap";
 import { lerp } from "../../utils/utils";
+import Picture from "../Picture/Picture";
 
-function PictureScroller({ pictures, currentPic, onSelectPic }) {
+function PictureScroller({ pictures, currentPic, onSelectPic, loadNextPage }) {
   // Ref to container that needs to be moved
   const container = useRef();
 
@@ -18,6 +19,12 @@ function PictureScroller({ pictures, currentPic, onSelectPic }) {
 
   // Currently selected picture ID
   const currentId = useRef(currentPic.id);
+
+  // Need to keep a ref to the pictures state
+  // because inside the animation loop i can't access
+  // the state, the list of pics will always be the one
+  // that the prop had when the function was created
+  const currentPics = useRef();
 
   // Scroll speed
   const speed = 0.5;
@@ -91,12 +98,27 @@ function PictureScroller({ pictures, currentPic, onSelectPic }) {
     const fromTop = rect.top - window.innerHeight / 2;
     const index = -Math.trunc(fromTop / picStride.current);
 
-    const newPic = pictures[index];
+    const newPic = currentPics.current[index];
 
     if (newPic.id != currentId.current) {
       currentId.current = newPic.id;
       onSelectPic(newPic.id);
+
+      // Load the next page if the index is the last of the list
+      if (index === currentPics.current.length - 1) {
+        console.log("load next page");
+        loadNextPage();
+      }
     }
+  };
+
+  const handleClick = (index) => {
+    const picRect = pics.current[index].getBoundingClientRect();
+    const center = picRect.top + picRect.height / 2;
+
+    targetY.current = targetY.current + (window.innerHeight / 2 - center);
+
+    hasSettled.current = false;
   };
 
   useEffect(() => {
@@ -123,16 +145,9 @@ function PictureScroller({ pictures, currentPic, onSelectPic }) {
     };
   }, []);
 
-  const handleClick = (index) => {
-    const picRect = pics.current[index].getBoundingClientRect();
-    const center = picRect.top + picRect.height / 2;
-
-    targetY.current = targetY.current + (window.innerHeight / 2 - center);
-
-    const pic = pictures[index];
-
-    onSelectPic(pic.id);
-  };
+  useEffect(() => {
+    currentPics.current = pictures;
+  }, [pictures]);
 
   return (
     <div className={styles.wrapper}>
@@ -146,7 +161,8 @@ function PictureScroller({ pictures, currentPic, onSelectPic }) {
               onClick={() => handleClick(i)}
               data-selected={pic.id === currentPic.id}
             >
-              <img src={pic.urls.thumb} alt={pic.description} />
+              {/* <img src={pic.urls.thumb} alt={pic.description} /> */}
+              <Picture src={pic.urls.thumb} alt={pic.description} blurhash={pic.blurhash} />
             </div>
           );
         })}

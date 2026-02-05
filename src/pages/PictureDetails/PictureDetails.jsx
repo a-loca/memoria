@@ -3,8 +3,9 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 import styles from "./PictureDetails.module.css";
 import LoadingScreen from "../../components/LoadingScreen/LoadingScreen";
 import PictureScroller from "../../components/PictureScroller/PictureScroller";
+import Picture from "../../components/Picture/Picture";
 
-function PictureDetails({ getDetails, pictures }) {
+function PictureDetails({ getDetails, pictures, loadNextPage }) {
   const { id } = useParams();
   const navigate = useNavigate();
   const [picture, setPicture] = useState({});
@@ -36,7 +37,7 @@ function PictureDetails({ getDetails, pictures }) {
 
           <div>
             <dt>Location</dt>
-            <dd>{picture.location.name ?? "Unavailable"}</dd>
+            <dd>{picture.location?.name ?? "Unavailable"}</dd>
           </div>
 
           <div>
@@ -46,7 +47,7 @@ function PictureDetails({ getDetails, pictures }) {
 
           <div>
             <dt>Shot On</dt>
-            <dd>{picture.exif.name ?? "Unavailable"}</dd>
+            <dd>{picture.exif?.name ?? "Unavailable"}</dd>
           </div>
         </dl>
       </div>
@@ -59,6 +60,7 @@ function PictureDetails({ getDetails, pictures }) {
           pictures={pictures}
           currentPic={picture}
           onSelectPic={(id) => navigate(`/gallery/${id}`)}
+          loadNextPage={loadNextPage}
         />
       </div>
     </div>

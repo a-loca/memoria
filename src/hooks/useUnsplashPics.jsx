@@ -97,6 +97,10 @@ export default function useUnsplashPics() {
       // If the picture does not have the details, fetch them
       const details = await UnsplashService.getPictureDetails(id);
 
+      // If details are null (there has been a problem with the request)
+      // just return the image as is
+      if(!details) return picture
+
       // Add retrieved data to the object
       picture.addDetails(details);
 

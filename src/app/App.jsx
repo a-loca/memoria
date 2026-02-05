@@ -18,7 +18,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/gallery" element={<Gallery pictures={pictures} loadNext={loadNext} canDownloadMore={canDownloadMore} />} />
-            <Route path="/gallery/:id" element={<PictureDetails getDetails={getDetails} pictures={pictures} />} />
+            <Route path="/gallery/:id" element={<PictureDetails getDetails={getDetails} pictures={pictures} loadNextPage={loadNext} />} />
             <Route path="/about" element={<About />} />
 
             {/* 404 Not Found */}

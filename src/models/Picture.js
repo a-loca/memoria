@@ -79,14 +79,17 @@ class Picture {
   }
 
   getEXIFString() {
-    let string = "";
-    if (this.exif.iso) string += "ISO " + this.exif.iso + " · ";
-    if (this.exif.exposure_time) string += this.exif.exposure_time + "s · ";
-    if(this.exif.aperture) string += this.exif.aperture + " · ";
-    if(this.exif.focal_length) string += this.exif.focal_length;
+    if(!this.exif) return null;
 
-    if(string.length === 0) return null;
-    return string;
+    const data = [];
+
+    if (this.exif.iso) data.push("ISO " + this.exif.iso);
+    if (this.exif.exposure_time) data.push(this.exif.exposure_time + "s");
+    if (this.exif.aperture) data.push("f/" + this.exif.aperture);
+    if (this.exif.focal_length) data.push(this.exif.focal_length + "mm");
+
+    if (data.length === 0) return null;
+    return data.join(" · ");
   }
 }
 
