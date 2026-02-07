@@ -1,7 +1,7 @@
 .wrapper {
   --pic-width: 100px;
   --pic-height: 120px;
-  height: 100svh;
+  height: 100vh;
   position: relative;
 
   .pics {
@@ -11,6 +11,7 @@
     row-gap: 16px;
 
     .picWrapper {
+      flex-shrink: 0;
       width: var(--pic-width);
       height: var(--pic-height);
       cursor: pointer;
@@ -44,34 +45,34 @@
     width: calc(var(--pic-width) + 20px);
     z-index: 0;
 
-    span{
+    span {
       position: absolute;
       height: 30px;
       width: 30px;
       border: 4px solid var(--foreground-color);
       opacity: 0.1;
-      
-      &:nth-child(1){
+
+      &:nth-child(1) {
         top: 0;
         left: 0;
         border-right: none;
         border-bottom: none;
       }
 
-      &:nth-child(2){
+      &:nth-child(2) {
         top: 0;
         right: 0;
         border-left: none;
         border-bottom: none;
       }
 
-      &:nth-child(3){
+      &:nth-child(3) {
         bottom: 0;
         left: 0;
         border-right: none;
         border-top: none;
       }
-      &:nth-child(4){
+      &:nth-child(4) {
         bottom: 0;
         right: 0;
         border-left: none;
@@ -107,5 +108,41 @@
       black 90%,
       black 100%
     );
+  }
+
+  @media (max-width: 768px) {
+    height: 100%;
+
+    --pic-width: 70px;
+    --pic-height: 90px;
+
+    .pics {
+      height: 100%;
+      flex-direction: row;
+      row-gap: 0;
+      column-gap: 16px;
+    }
+
+    &::after {
+      background-color: var(--scroller-bg);
+      mask-image: linear-gradient(
+        to right,
+        black 0%,
+        black 5%,
+        transparent 30%,
+        transparent 70%,
+        black 95%,
+        black 100%
+      );
+      -webkit-mask-image: linear-gradient(
+        to right,
+        black 0%,
+        black 5%,
+        transparent 30%,
+        transparent 70%,
+        black 95%,
+        black 100%
+      );
+    }
   }
 }

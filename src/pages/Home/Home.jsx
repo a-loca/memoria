@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styles from "./Home.module.css";
 import heroImg from "../../assets/hero.png";
 

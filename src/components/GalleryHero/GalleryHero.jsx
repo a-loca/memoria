@@ -63,6 +63,7 @@ function GalleryHero() {
         <p>Some moments keep floating</p>
         <p>They linger</p>
         <p>Clouds above, soft and bright</p>
+        <p className={styles.mobileCaption}>Memories that shine, warm clouds in the sky above</p>
       </div>
     </div>
   );

@@ -3,7 +3,6 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 import styles from "./PictureDetails.module.css";
 import LoadingScreen from "../../components/LoadingScreen/LoadingScreen";
 import PictureScroller from "../../components/PictureScroller/PictureScroller";
-import Picture from "../../components/Picture/Picture";
 
 function PictureDetails({ getDetails, pictures, loadNextPage }) {
   const { id } = useParams();

@@ -23,7 +23,7 @@
         position: sticky;
         top: 0;
 
-        height: 100svh;
+        height: 100dvh;
         width: 100%;
 
         padding: var(--outer-margin);
@@ -39,7 +39,7 @@
           justify-content: space-between;
 
           svg {
-            height: 120px;
+            height: clamp(20px, 6vw, 120px);
           }
         }
 
@@ -58,6 +58,10 @@
       z-index: 1;
       padding-top: 160px;
       padding-bottom: 64px;
+
+      @media(max-width : 768px){
+        padding-top: 64px;
+      }
     }
 
     .loadMore {

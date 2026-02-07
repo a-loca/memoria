@@ -3,8 +3,13 @@
   grid-template-columns: repeat(12, 1fr);
   column-gap: 36px;
 
+  @media(max-width: 768px){
+    display: flex;
+    justify-content: center;
+    margin: 0 36px;
+  }
+
   .masonry {
-    /* width: 100%; */
     grid-column-start: 2;
     grid-column-end: 12;
 

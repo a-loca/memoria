@@ -7,7 +7,7 @@ import { NavLink } from "react-router-dom";
 function MasonryLayout({ pictures }) {
   return (
     <div className={styles.container}>
-      <MasonryGrid className={styles.masonry} gap={16} frameWidth={500}>
+      <MasonryGrid className={styles.masonry} gap={16} frameWidth={400}>
         {pictures.map((pic) => (
           <Frame key={pic.id} className={styles.frame} width={pic.width} height={pic.height}>
             <NavLink to={"/gallery/" + pic.id}>

@@ -12,14 +12,14 @@
   z-index: 99;
 
   .logo {
-    width: 90px;
+    width: clamp(64px, 10vw , 90px);
     height: auto;
   }
 
   .links {
     display: flex;
     flex-direction: column;
-    row-gap: 6px;
+    row-gap: clamp(0px, 0.1vw, 6px);
 
     * {
       color: var(--foreground-color);

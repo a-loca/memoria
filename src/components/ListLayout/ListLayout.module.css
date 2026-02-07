@@ -38,11 +38,15 @@
       display: flex;
       align-items: center;
       justify-content: start;
-      font-size: 2rem;
+      font-size: clamp(1rem, 2vw, 2rem);
       margin-left: 24px;
 
       opacity: 0;
       filter: blur(0.25rem);
+
+      @media (max-width: 768px) {
+        display: none;
+      }
     }
 
     .description {
@@ -54,8 +58,13 @@
 
       font-size: var(--font-size-medium);
 
-      a{
+      a {
         text-decoration: none;
+      }
+
+      @media (max-width: 768px) {
+        grid-column-start: 2;
+        grid-column-end: 12;
       }
     }
 
@@ -68,11 +77,15 @@
       align-items: center;
       justify-content: end;
 
-      font-size: 2rem;
+      font-size: clamp(1rem, 2vw, 2rem);
       margin-right: 24px;
 
       opacity: 0;
       filter: blur(0.25rem);
+
+      @media (max-width: 768px) {
+        display: none;
+      }
     }
   }
 }

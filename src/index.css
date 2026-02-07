@@ -7,6 +7,10 @@
   --outer-margin: 24px;
   --top-margin: 9rem;
 
+    @media(max-width: 768px){
+    --outer-margin: 18px;
+  }
+
   /* Fonts */
   --font-weight-medium: 500;
   --font-weight-bold: 800;
@@ -20,6 +24,7 @@
 
   /* Animations */
   --ease-custom: cubic-bezier(0.33, 1, 0.68, 1);
+
 }
 
 ::selection {

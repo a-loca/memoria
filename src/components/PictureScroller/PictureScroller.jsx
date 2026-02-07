@@ -93,7 +93,6 @@ function PictureScroller({ pictures, currentPic, onSelectPic, loadNextPage }) {
   };
 
   const changeCurrentPic = () => {
-    console.log("changeCurrentPic");
     const rect = container.current.getBoundingClientRect();
     const fromTop = rect.top - window.innerHeight / 2;
     const index = -Math.trunc(fromTop / picStride.current);
@@ -106,7 +105,6 @@ function PictureScroller({ pictures, currentPic, onSelectPic, loadNextPage }) {
 
       // Load the next page if the index is the last of the list
       if (index === currentPics.current.length - 1) {
-        console.log("load next page");
         loadNextPage();
       }
     }
@@ -132,9 +130,9 @@ function PictureScroller({ pictures, currentPic, onSelectPic, loadNextPage }) {
     picStride.current = second.top - first.top;
 
     // Position container so that the selected picture is centered
-    const index = pictures.findIndex((p) => currentPic.id === p.id);
-    targetY.current = -index * picStride.current + window.innerHeight / 2 - picHeight.current / 2;
-    currentY.current = targetY.current;
+    // const index = pictures.findIndex((p) => currentPic.id === p.id);
+    // targetY.current = -index * picStride.current + window.innerHeight / 2 - picHeight.current / 2;
+    // currentY.current = targetY.current;
 
     // Start the smooth animation loop
     animate();
