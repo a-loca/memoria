@@ -117,6 +117,7 @@
     --pic-height: 90px;
 
     .pics {
+      width: max-content;
       height: 100%;
       flex-direction: row;
       row-gap: 0;

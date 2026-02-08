@@ -3,10 +3,12 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 import styles from "./PictureDetails.module.css";
 import LoadingScreen from "../../components/LoadingScreen/LoadingScreen";
 import PictureScroller from "../../components/PictureScroller/PictureScroller";
+import useDeviceWidth from "../../hooks/useDeviceWidth";
 
 function PictureDetails({ getDetails, pictures, loadNextPage }) {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { isMobile } = useDeviceWidth();
   const [picture, setPicture] = useState({});
 
   useEffect(() => {
@@ -60,6 +62,7 @@ function PictureDetails({ getDetails, pictures, loadNextPage }) {
           currentPic={picture}
           onSelectPic={(id) => navigate(`/gallery/${id}`)}
           loadNextPage={loadNextPage}
+          axis={isMobile ? "horizontal" : "vertical"}
         />
       </div>
     </div>
