@@ -24,7 +24,6 @@
       text-transform: uppercase;
 
       font-size: clamp(4rem, 13vw + 2rem, 20rem);
-
       letter-spacing: var(--letter-spacing);
       font-weight: var(--font-weight-bold);
       margin: 0;

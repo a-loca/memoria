@@ -7,7 +7,7 @@
   --outer-margin: 24px;
   --top-margin: 9rem;
 
-    @media(max-width: 768px){
+  @media (max-width: 768px) {
     --outer-margin: 18px;
   }
 
@@ -17,14 +17,13 @@
 
   --font-size-title: 18vw;
   --font-size-header: clamp(4rem, 13vw + 1.5rem, 15rem);
-  --font-size-medium: clamp(1.3rem, 1.5vw + 1rem,  3rem);
+  --font-size-medium: clamp(1.3rem, 1.5vw + 1rem, 3rem);
   --font-size-small: clamp(1rem, 2vw, 1.5rem);
 
   --letter-spacing: -0.03em;
 
   /* Animations */
   --ease-custom: cubic-bezier(0.33, 1, 0.68, 1);
-
 }
 
 ::selection {

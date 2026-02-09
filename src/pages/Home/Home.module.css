@@ -16,7 +16,7 @@
     padding: 0 24px;
 
     /* Clipping mask */
-    background: url("../../assets/hero_text_bg.png");
+    background: url("../../assets/img/hero_text_bg.png");
     background-size: cover;
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;

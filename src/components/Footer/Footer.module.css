@@ -1,0 +1,40 @@
+
+.container {
+  display: flex;
+  flex-direction: column;
+
+  .author {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    p {
+      font-size: var(--font-size-medium);
+      letter-spacing: var(--letter-spacing);
+      font-weight: var(--font-weight-medium);
+      margin: 0;
+    }
+
+    svg {
+      height: clamp(20px, 6vw, 120px);
+    }
+  }
+
+  .name {
+    text-align: center;
+    text-transform: uppercase;
+    /* margin: calc(-1 * var(--outer-margin)); */
+
+    font-size: 20vw;
+    letter-spacing: var(--letter-spacing);
+    font-weight: var(--font-weight-bold);
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 80%;
+
+    &::first-letter{
+        margin-left: 0;
+    }
+  }
+}

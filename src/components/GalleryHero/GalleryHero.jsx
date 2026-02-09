@@ -3,7 +3,7 @@ import styles from "./GalleryHero.module.css";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import hero from "../../assets/gallery_hero.jpg";
+import hero from "../../assets/img/gallery_hero.jpg";
 
 function GalleryHero() {
   const heroContainer = useRef();
