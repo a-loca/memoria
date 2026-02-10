@@ -9,7 +9,7 @@ function Navbar() {
     <header>
       <div className={styles.navbar}>
         <NavLink to="/">
-          <img src={cloud} alt="A clouds as logo" className={styles.logo} />
+          <img src={cloud} alt="A cloud" className={styles.logo} />
         </NavLink>
 
         <nav>
