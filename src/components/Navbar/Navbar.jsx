@@ -4,7 +4,7 @@ import cloud from "../../assets/cloud.svg";
 import { NavLink } from "react-router-dom";
 import HoverAnimatedText from "../HoverAnimatedText/HoverAnimatedText";
 
-function Navbar() {
+function Navbar({ routes }) {
   return (
     <header>
       <div className={styles.navbar}>
@@ -14,7 +14,7 @@ function Navbar() {
 
         <nav>
           <div className={styles.links}>
-            <NavLink to="/">
+            {/* <NavLink to="/">
               <HoverAnimatedText text="Home" />
             </NavLink>
             <NavLink to="/gallery">
@@ -22,7 +22,16 @@ function Navbar() {
             </NavLink>
             <NavLink to="/about">
               <HoverAnimatedText text="About" />
-            </NavLink>
+            </NavLink> */}
+            {routes.map((route, i) => {
+              return (
+                route.showInNavbar && (
+                  <NavLink to={route.path} key={"navlink_" + i}>
+                    <HoverAnimatedText text={route.label} />
+                  </NavLink>
+                )
+              );
+            })}
           </div>
         </nav>
       </div>

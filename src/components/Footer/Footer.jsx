@@ -24,6 +24,7 @@ function Footer() {
         duration: 1,
         scrollTrigger: {
           trigger: logoContainer.current,
+          scrub: true,
           start: "top bottom",
           end: "bottom bottom",
         },

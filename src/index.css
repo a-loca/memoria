@@ -77,13 +77,13 @@ body::before {
   left: -50%;
   top: -100%;
 
-  z-index: 1;
+  z-index: 100;
   pointer-events: none;
 
   /* Noise image as background */
   background-image: url("./assets/noise.png");
   background-repeat: repeat;
-  opacity: 80%;
+  opacity: 70%;
 
   animation: film-grain 20s steps(10) infinite;
 }

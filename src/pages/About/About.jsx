@@ -15,7 +15,7 @@ function About() {
           <p>Designed in Figma</p>
           <p>Smooth scrolling with Lenis</p>
           <p>Memories from Unsplash API</p>
-          <p>Hero images from Pinterest</p>
+          <p>Decorative images from Pinterest</p>
         </div>
       </div>
       <div className={styles.grid}>

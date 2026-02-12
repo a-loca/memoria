@@ -1,4 +1,4 @@
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import SmoothScroller from "../components/SmoothScroller/SmoothScroller";
 import Home from "../pages/Home/Home";
 import Gallery from "../pages/Gallery/Gallery";
@@ -7,23 +7,58 @@ import About from "../pages/About/About";
 import NotFound from "../pages/NotFound/NotFound";
 import Navbar from "../components/Navbar/Navbar";
 import useUnsplashPics from "../hooks/useUnsplashPics";
+import AnimatedRoutes from "../components/AnimatedRoutes/AnimatedRoutes";
 
 function App() {
   const { pictures, loadNext, canDownloadMore, getDetails } = useUnsplashPics();
+
+  const routes = [
+    {
+      path: "/",
+      label: "Home",
+      showInNavbar: true,
+      element: <Home />,
+    },
+    {
+      path: "/gallery",
+      label: "Gallery",
+      showInNavbar: true,
+      element: (
+        <Gallery pictures={pictures} loadNext={loadNext} canDownloadMore={canDownloadMore} />
+      ),
+    },
+    {
+      path: "/gallery/:id",
+      label: "Details",
+      showInNavbar: false,
+      element: (
+        <PictureDetails getDetails={getDetails} pictures={pictures} loadNextPage={loadNext} />
+      ),
+    },
+    {
+      path: "/about",
+      label: "About",
+      showInNavbar: true,
+      element: <About />,
+    },
+    {
+      path: "*",
+      label: "404",
+      showInNavbar: false,
+      element: <NotFound />,
+    },
+  ];
+
   return (
     <SmoothScroller>
       <Router>
-        <Navbar />
+        <Navbar routes={routes} />
         <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/gallery" element={<Gallery pictures={pictures} loadNext={loadNext} canDownloadMore={canDownloadMore} />} />
-            <Route path="/gallery/:id" element={<PictureDetails getDetails={getDetails} pictures={pictures} loadNextPage={loadNext} />} />
-            <Route path="/about" element={<About />} />
-
-            {/* 404 Not Found */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <AnimatedRoutes exclude={["/gallery/:id"]}>
+            {routes.map((route, i) => {
+              return <Route key={"route_" + i} path={route.path} element={route.element} />;
+            })}
+          </AnimatedRoutes>
         </main>
       </Router>
     </SmoothScroller>
