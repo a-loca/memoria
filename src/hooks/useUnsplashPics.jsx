@@ -26,6 +26,20 @@ export default function useUnsplashPics() {
   // the current page can be the first
   const page = useRef(parseInt(sessionStorage.getItem("page")) || 1);
 
+  const initialize = async () => {
+    // If the data is present in the storage, it has already
+    // been loaded when the state was created,
+    // which means that there's no need for an API call
+    if (pictures.length > 0) return;
+
+    // Fetch first page from API and save in the storage
+    await getNextPage(false, 1);
+
+    // Start counting from the next page and save it into storage
+    page.current = 2;
+    sessionStorage.setItem("page", 2);
+  };
+
   const loadNext = () => {
     // On click even handler for requesting more pictures
     getNextPage(true, page.current);
@@ -53,25 +67,6 @@ export default function useUnsplashPics() {
   };
 
   useEffect(() => {
-    // Load the initial page
-    const initialFetch = async () => {
-      // If the data is present in the storage, it has already
-      // been loaded when the state was created,
-      // which means that there's no need for an API call
-      if (pictures.length > 0) return;
-
-      // Fetch first page from API and save in the storage
-      await getNextPage(false, 1);
-
-      // Start counting from the next page and save it into storage
-      page.current = 2;
-      sessionStorage.setItem("page", 2);
-    };
-
-    initialFetch();
-  }, []);
-
-  useEffect(() => {
     // If the list is null or empty, there's no need
     // to back it up in the storage
     if (!pictures || pictures.length < 1) return;
@@ -89,17 +84,20 @@ export default function useUnsplashPics() {
     // Find picture in the collection
     let picture = pictures.find((pic) => pic.id === id);
 
+    // Check if picture is not undefined or null
+    const wasAlreadyDownloaded = !!picture;
+
     // If the picture exists in the already downloaded list
-    if (picture) {
+    if (wasAlreadyDownloaded) {
       // Check if the picture already has the details
-      if (picture.hasDetails()) return picture;
+      if (picture.hasDetails()) return { picture, wasAlreadyDownloaded };
 
       // If the picture does not have the details, fetch them
       const details = await UnsplashService.getPictureDetails(id);
 
       // If details are null (there has been a problem with the request)
       // just return the image as is
-      if(!details) return picture
+      if (!details) return { picture, wasAlreadyDownloaded };
 
       // Add retrieved data to the object
       picture.addDetails(details);
@@ -107,22 +105,22 @@ export default function useUnsplashPics() {
       // Save the data in the list
       setPictures((prev) => prev.map((p) => (p.id === id ? picture : p)));
 
-      return picture;
+      return { picture, wasAlreadyDownloaded };
     } else {
       // If the picture is not in the downloaded list, check
       // if it actually exists by sending the request
       const fullData = await UnsplashService.getPictureDetails(id);
 
       // If it does not exist, return null and the page will redirect to 404
-      if (!fullData) return null;
+      if (!fullData) return { picture: null, wasAlreadyDownloaded };
 
       // If the details exist, create the object using that data and send it back
       const newPic = Picture.newFromApi(fullData);
       newPic.addDetails(fullData);
 
-      return newPic;
+      return { picture: newPic, wasAlreadyDownloaded };
     }
   };
 
-  return { pictures, loadNext, canDownloadMore, getDetails };
+  return { initialize, pictures, loadNext, canDownloadMore, getDetails };
 }

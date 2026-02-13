@@ -16,7 +16,7 @@ function Footer() {
 
     gsap.fromTo(
       logo.current,
-      { opacity: 0.5, scale: 0.99, filter: "blur(24px)" },
+      { opacity: 0, scale: 0.99, filter: "blur(24px)" },
       {
         opacity: 1,
         scale: 1,
@@ -24,9 +24,10 @@ function Footer() {
         duration: 1,
         scrollTrigger: {
           trigger: logoContainer.current,
-          scrub: true,
-          start: "top bottom",
+          // scrub: true,
+          start: "+50% bottom",
           end: "bottom bottom",
+          toggleActions: "play none play reverse",
         },
       }
     );

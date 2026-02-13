@@ -135,7 +135,9 @@ function PictureScroller({ pictures, currentPic, onSelectPic, loadNextPage, axis
     const prop = axis === "vertical" ? "y" : "x";
     gsap.set(container.current, { [prop]: currentCoord.current });
 
-    decideIfPictureChange();
+    if (currentPics.current && currentPics.current.length > 1) {
+      decideIfPictureChange();
+    }
 
     rafId.current = requestAnimationFrame(animate);
   };
@@ -169,6 +171,7 @@ function PictureScroller({ pictures, currentPic, onSelectPic, loadNextPage, axis
 
   // Currently selected picture ID
   const latestFetchedIndex = useRef();
+
   useEffect(() => {
     latestFetchedIndex.current = pictures.findIndex((p) => currentPic.id === p.id);
   }, []);
@@ -185,7 +188,7 @@ function PictureScroller({ pictures, currentPic, onSelectPic, loadNextPage, axis
       onSelectPic(newPic.id);
 
       // Load the next page of pics if the index is the last of the list
-      if (index === currentPics.current.length - 1) {
+      if (index === currentPics.current.length - 1 && currentPics.current.length > 1) {
         loadNextPage();
       }
     }
@@ -209,7 +212,10 @@ function PictureScroller({ pictures, currentPic, onSelectPic, loadNextPage, axis
   const handleResize = () => {
     // Calc picture height and width, since they change through css media query
     const first = pics.current[0].getBoundingClientRect();
-    const second = pics.current[1].getBoundingClientRect();
+    const second = (
+      pics.current.length > 1 ? pics.current[1] : pics.current[0]
+    ).getBoundingClientRect();
+
     picHeight.current = first.height;
     picWidth.current = first.width;
 

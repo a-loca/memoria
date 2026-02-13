@@ -9,21 +9,32 @@ function PictureDetails({ getDetails, pictures, loadNextPage }) {
   const { id } = useParams();
   const navigate = useNavigate();
   const { isMobile } = useDeviceWidth();
+
+  // Check if the requested image was already in the list of pictures
+  // retrieved through the gallery
+  const [wasAlreadyDownloaded, setWasAlreadyDownloaded] = useState();
+
+  // Initializing an empty object because I can then
+  // check if the value turns to null, meaning that the picture
+  // has not been found, while still showing a loading screen
   const [picture, setPicture] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
-      const picture = await getDetails(id);
+      const { picture, wasAlreadyDownloaded } = await getDetails(id);
       setPicture(picture);
+      setWasAlreadyDownloaded(wasAlreadyDownloaded);
     };
 
     fetchData();
   }, [id]);
 
-  // Picture not found by the API, redirect
+  // Picture not found by the API, redirect to 404
   if (picture == null) return <Navigate to={"/404"} replace />;
 
   // If the picture object is still empty, show the loading screen
+  // I can just check the description because all the fields are
+  // initialized at once
   if (!picture.description) return <LoadingScreen />;
 
   return (
@@ -53,12 +64,14 @@ function PictureDetails({ getDetails, pictures, loadNextPage }) {
         </dl>
       </div>
       <div className={styles.centerContent}>
-        {/* TODO: POLAROID   */}
         <img src={picture.urls.regular} />
       </div>
       <div className={styles.rightContent}>
         <PictureScroller
-          pictures={pictures}
+          // If the requested picture is not in the state
+          // that holds all the pictures, it means that the user
+          // arrived there through direct URL request
+          pictures={wasAlreadyDownloaded ? pictures : [picture]}
           currentPic={picture}
           onSelectPic={(id) => navigate(`/gallery/${id}`)}
           loadNextPage={loadNextPage}

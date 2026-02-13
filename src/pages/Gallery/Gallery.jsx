@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Gallery.module.css";
 import PlusMarker from "../../components/PlusMarker/PlusMarker";
 import MasonryLayout from "../../components/MasonryLayout/MasonryLayout";
@@ -8,14 +8,20 @@ import ScrollToTopButton from "../../components/ScrollToTopButton/ScrollToTopBut
 import LoadMoreButton from "../../components/LoadMoreButton/LoadMoreButton";
 import GalleryHero from "../../components/GalleryHero/GalleryHero";
 import ErrorScreen from "../../components/ErrorScreen/ErrorScreen";
+import Footer from "../../components/Footer/Footer";
 
-function Gallery({ pictures, loadNext, canDownloadMore }) {
+function Gallery({ initialize, pictures, loadNext, canDownloadMore }) {
   const modes = [
     { type: "Grid", id: 0, element: <MasonryLayout pictures={pictures} /> },
     { type: "List", id: 1, element: <ListLayout pictures={pictures} /> },
   ];
 
   const [currentMode, setCurrentMode] = useState(modes[0].id);
+
+  useEffect(() => {
+    // Download the first page of images
+    initialize();
+  }, []);
 
   return (
     <div className={styles.container}>
