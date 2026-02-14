@@ -8,7 +8,6 @@ import ScrollToTopButton from "../../components/ScrollToTopButton/ScrollToTopBut
 import LoadMoreButton from "../../components/LoadMoreButton/LoadMoreButton";
 import GalleryHero from "../../components/GalleryHero/GalleryHero";
 import ErrorScreen from "../../components/ErrorScreen/ErrorScreen";
-import Footer from "../../components/Footer/Footer";
 
 function Gallery({ initialize, pictures, loadNext, canDownloadMore }) {
   const modes = [
