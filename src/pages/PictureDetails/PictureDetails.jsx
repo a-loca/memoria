@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import styles from "./PictureDetails.module.css";
 import LoadingScreen from "../../components/LoadingScreen/LoadingScreen";
 import PictureScroller from "../../components/PictureScroller/PictureScroller";
 import useDeviceWidth from "../../hooks/useDeviceWidth";
+import Spinner from "../../components/Spinner/Spinner";
+import gsap from "gsap";
 
 function PictureDetails({ getDetails, pictures, loadNextPage }) {
   const { id } = useParams();
@@ -28,6 +30,12 @@ function PictureDetails({ getDetails, pictures, loadNextPage }) {
 
     fetchData();
   }, [id]);
+
+  // Smoothly fade in image when loaded
+  const image = useRef();
+  const handleLoad = () => {
+    gsap.fromTo(image.current, { opacity: 0 }, { opacity: 1, duration: 0.5 });
+  };
 
   // Picture not found by the API, redirect to 404
   if (picture == null) return <Navigate to={"/404"} replace />;
@@ -64,7 +72,7 @@ function PictureDetails({ getDetails, pictures, loadNextPage }) {
         </dl>
       </div>
       <div className={styles.centerContent}>
-        <img src={picture.urls.regular} />
+        <img id="detailsPicture" ref={image} src={picture.urls.regular} onLoad={handleLoad} />
       </div>
       <div className={styles.rightContent}>
         <PictureScroller

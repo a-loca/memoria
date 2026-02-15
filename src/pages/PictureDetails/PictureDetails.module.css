@@ -45,6 +45,7 @@
     justify-content: center;
 
     img {
+      opacity: 0;
       max-height: 90vh;
       max-width: 100%;
     }
@@ -72,8 +73,6 @@
       grid-column: 1 / -1;
 
       img {
-        /* max-height: 50vh;
-        max-width: 90%; */
         height: auto;
         max-height: 100%;
         max-width: 100%;
@@ -101,9 +100,8 @@
 
       margin: 0 calc(var(--outer-margin) * -1);
 
-      --scroller-bg :  #eeece5;
+      --scroller-bg: #eeece5;
       background-color: var(--scroller-bg);
-
     }
   }
 }

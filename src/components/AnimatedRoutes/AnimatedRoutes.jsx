@@ -24,6 +24,25 @@ function AnimatedRoutes({ children, exclude }) {
         // If i'm exiting an excluded path to go to an excluded path
         // don't animate
         if (isInExcluded(displayLocation.pathname) && isInExcluded(location.pathname)) {
+
+          // Animate out the picture in the details page to smooth the transition
+          // if the page 
+          const pic = document.getElementById("detailsPicture");
+          if (pic) {
+            gsap.to(pic, {
+              opacity: 0,
+              duration: 0.5,
+              onComplete: () => {
+                // When the animation is completed, change page
+                prevPath.current = displayLocation.pathname;
+                setDisplayLocation(location);
+              },
+            });
+
+            return;
+          }
+          
+          // If there is no image to transition, just navigate to the page
           prevPath.current = displayLocation.pathname;
           setDisplayLocation(location);
           return;
