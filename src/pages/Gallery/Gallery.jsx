@@ -9,7 +9,7 @@ import LoadMoreButton from "../../components/LoadMoreButton/LoadMoreButton";
 import GalleryHero from "../../components/GalleryHero/GalleryHero";
 import ErrorScreen from "../../components/ErrorScreen/ErrorScreen";
 
-function Gallery({ initialize, pictures, loadNext, canDownloadMore }) {
+function Gallery({ initialize, pictures, loadNextPage, canDownloadMore }) {
   const modes = [
     { type: "Grid", id: 0, element: <MasonryLayout pictures={pictures} /> },
     { type: "List", id: 1, element: <ListLayout pictures={pictures} /> },
@@ -55,7 +55,7 @@ function Gallery({ initialize, pictures, loadNext, canDownloadMore }) {
               {modes.find((mode) => mode.id === currentMode).element}
             </div>
             <div className={styles.loadMore}>
-              <LoadMoreButton enabled={canDownloadMore} action={loadNext} />
+              <LoadMoreButton enabled={canDownloadMore} action={loadNextPage} />
             </div>
           </>
         )}

@@ -40,7 +40,7 @@ export default function useUnsplashPics() {
     sessionStorage.setItem("page", 2);
   };
 
-  const loadNext = () => {
+  const loadNextPage = () => {
     // On click even handler for requesting more pictures
     getNextPage(true, page.current);
     page.current += 1;
@@ -122,5 +122,5 @@ export default function useUnsplashPics() {
     }
   };
 
-  return { initialize, pictures, loadNext, canDownloadMore, getDetails };
+  return { initialize, pictures, loadNextPage, canDownloadMore, getDetails };
 }

@@ -10,7 +10,7 @@ import useUnsplashPics from "../hooks/useUnsplashPics";
 import AnimatedRoutes from "../components/AnimatedRoutes/AnimatedRoutes";
 
 function App() {
-  const { initialize, pictures, loadNext, canDownloadMore, getDetails } = useUnsplashPics();
+  const { initialize, pictures, loadNextPage, canDownloadMore, getDetails } = useUnsplashPics();
 
   const routes = [
     {
@@ -24,7 +24,7 @@ function App() {
       label: "Gallery",
       showInNavbar: true,
       element: (
-        <Gallery initialize={initialize} pictures={pictures} loadNext={loadNext} canDownloadMore={canDownloadMore} />
+        <Gallery initialize={initialize} pictures={pictures} loadNext={loadNextPage} canDownloadMore={canDownloadMore} />
       ),
     },
     {
@@ -32,7 +32,7 @@ function App() {
       label: "Details",
       showInNavbar: false,
       element: (
-        <PictureDetails getDetails={getDetails} pictures={pictures} loadNextPage={loadNext} />
+        <PictureDetails getDetails={getDetails} pictures={pictures} loadNextPage={loadNextPage} />
       ),
     },
     {

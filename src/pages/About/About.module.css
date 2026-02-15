@@ -63,7 +63,8 @@
   }
 
   @media (max-width: 768px) {
-    --gap: 56px;
+    --gap: 36px;
+    --top-margin: 7rem;
 
     .header {
       margin: 0 3vw;
