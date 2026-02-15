@@ -1,5 +1,5 @@
 # ☁️ Memoria
-Memoria is a web application that leverages [Unsplash API](https://unsplash.com/developers) to recreate the nostalgic vibe of joyful **memories** captured through **old-school film photography**. Experience Memoria at https://www.memoria-gallery.vercel.app.
+Memoria is a web application that leverages [Unsplash API](https://unsplash.com/developers) to recreate the nostalgic vibe of joyful **memories** captured through **old-school film photography**.
 
 The website was made with React.js and animated with [GSAP](https://gsap.com/) as part of the "Web Applications: Design and Development" course @Unimib.
 
