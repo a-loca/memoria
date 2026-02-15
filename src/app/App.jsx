@@ -24,7 +24,7 @@ function App() {
       label: "Gallery",
       showInNavbar: true,
       element: (
-        <Gallery initialize={initialize} pictures={pictures} loadNext={loadNextPage} canDownloadMore={canDownloadMore} />
+        <Gallery initialize={initialize} pictures={pictures} loadNextPage={loadNextPage} canDownloadMore={canDownloadMore} />
       ),
     },
     {

@@ -2,13 +2,18 @@ import React, { useRef } from "react";
 import { Blurhash } from "react-blurhash";
 import gsap from "gsap";
 import styles from "./Picture.module.css";
+import { useGSAP } from "@gsap/react";
 
 function Picture({ src, blurhash, alt }) {
   const hashblur = useRef();
   const img = useRef();
 
+  useGSAP(() => {
+    gsap.fromTo(hashblur.current, { opacity: 0 }, { opacity: 1, duration: 1 });
+  });
+
   const handleLoad = () => {
-    gsap.fromTo(hashblur.current, { opacity: 1 }, { opacity: 0, duration: 1 });
+    gsap.to(hashblur.current, { opacity: 0, duration: 1 });
     gsap.fromTo(
       img.current,
       { opacity: 0 },
