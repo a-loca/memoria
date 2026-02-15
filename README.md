@@ -90,7 +90,9 @@ This is where the bulk of the logic of the application is implemented. It holds 
 
 The number of the latest page of images requested is stored in a ref, since we want it to persist through renders and does not need to trigger re-renders when changed.
 
-The application uses the `sessionStorage` to **avoid repeating API calls**, given the strict usage limitations. Session storage was chosen over `localStorage` to avoid saving persistent data into the user's browser, since an application like Memoria is not meant for frequent usage. 
+The application uses the `sessionStorage` to **avoid repeating API calls**, given the strict usage limitations. Session storage was chosen over `localStorage` to avoid saving persistent data into the user's browser, since an application like Memoria is not meant for frequent usage. In case the Unsplash API request limit is reached:
+- If the data is still present in the session storage, then the app will continue working, but it won't be able to fetch additional details about the images (location, EXIF).
+- If there is no saved data in storage, an error screen will be displayed instead of the gallery.
 
 Using the storage means that both **states are initialized through a function**: the app runs a check on the session storage and if it finds saved data, it uses it to initialize the state, otherwise it assigns a default value. The same goes for the page number ref. To keep state and storage synchronized, two `useEffect` hooks save the contents of the states into `sessionStorage` whenever they change, thanks to the dependency array.
 
