@@ -1,9 +1,31 @@
-# Memoria
+# ☁️ Memoria
 Memoria is a web application that leverages [Unsplash API](https://unsplash.com/developers) to recreate the nostalgic vibe of joyful **memories** captured through **old-school film photography**. Experience Memoria at https://www.memoria-gallery.vercel.app.
 
 The website was made with React.js and animated with [GSAP](https://gsap.com/) as part of the "Web Applications: Design and Development" course @Unimib.
 
-## Sitemap
+## 📚 Table of contents
+- [☁️ Memoria](#️-memoria)
+  - [📚 Table of contents](#-table-of-contents)
+  - [🗺️ Sitemap](#️-sitemap)
+    - [Home (`/`)](#home-)
+    - [Gallery (`/gallery`)](#gallery-gallery)
+    - [Details (`/gallery/{id}`)](#details-galleryid)
+    - [About (`/about`)](#about-about)
+  - [⚙️ Technical Details](#️-technical-details)
+    - [Unsplash API](#unsplash-api)
+      - [`GET /collections/:id/photos`](#get-collectionsidphotos)
+      - [`GET /photos/:id`](#get-photosid)
+    - [MVVC](#mvvc)
+      - [ViewModel](#viewmodel)
+    - [Example Scenario](#example-scenario)
+  - [🖥️ UI](#️-ui)
+    - [Components](#components)
+    - [Animations](#animations)
+  - [🚀 Deployment](#-deployment)
+  - [🚧 Future plans](#-future-plans)
+
+
+## 🗺️ Sitemap
 The website is made of 4 main pages and a 404 screen. What follows is a small description of the structure of the website.
 
 ### Home (`/`)
@@ -32,7 +54,7 @@ The user will be able to navigate to the rest of the images in the collection di
 ### About (`/about`)
 Another presentation-only page that is meant to provide some very brief information on the technological stack used to develop the website.
 
-## Technical Details
+## ⚙️ Technical Details
 
 ### Unsplash API
 The website uses Unsplash API to gather images to be displayed in the gallery. The idea of the website was always to recreate the nostalgic feeling of looking back at photographic albums, so other image retrieval related APIs were considered, the main alternative being Flickr. Unfortunately, Flickr's free API access was removed in May 2025. Unsplash was the next best option for my use case. 
@@ -42,9 +64,14 @@ The website uses Unsplash API to gather images to be displayed in the gallery. T
 
 To access the API, a `UnsplashService` class with static functions was created at `src/services/UnsplashService.js`. This allows for better separation of concerns between all the different parts of the website. 
 
-The endpoints that UnsplashService uses to collect data are the following:
-- `GET /collections/:id/photos`: through the `getNextPage` function, the website is able to retrieve the next 30 pictures (maximum allowed by the API) in my custom collection on Unsplash, if requested by the user. Each request will specify the `page` parameter to make sure that the images are fetched in the correct order. Some of the information that this endpoint provides for each image: ID, original width and height, description, URLs to access it in different sizes, information about the user who uploaded it.
-- `GET /photos/:id`: the `getPictureDetails` function will get additional information about the specified image, which includes location and EXIF data, which ate not provided by the previous endpoint. 
+The endpoints that UnsplashService uses to collect data are the following.
+
+#### `GET /collections/:id/photos`
+Through the `getNextPage` function, the website is able to retrieve the next 30 pictures (maximum allowed by the API) in my custom collection on Unsplash, if requested by the user. Each request will specify the `page` parameter to make sure that the images are fetched in the correct order. Some of the information that this endpoint provides for each image: ID, original width and height, description, URLs to access it in different sizes, information about the user who uploaded it.
+
+#### `GET /photos/:id`
+The `getPictureDetails` function will get additional information about the specified image, which includes location and EXIF data, which ate not provided by the previous endpoint. 
+
 
 ### MVVC
 The website was developed following the MVVC pattern:
@@ -54,8 +81,12 @@ The website was developed following the MVVC pattern:
 
 #### ViewModel
 This is where the bulk of the logic of the application is implemented. It holds two state variables that are exposed to the rest of the app:
-- `pictures`: the list of **pictures** that the website has already retrieved **from the Unsplash collection**.
-- `canDownloadMore`: a boolean variable that indicates **whether there are still remaining images in the collection** that have yet to be retrieved. Since the number of images requested with each API call is fixed at 30, we can assume that if a request for a new page returns a number of items that is not the maximum, then we have reached the end of the collection and the user should not be able to request more pics.
+
+| State | Description |
+|----------|-------------|
+| `pictures` | The list of **pictures** that the website has already retrieved **from the Unsplash collection**. |
+| `canDownloadMore` | A boolean variable that indicates **whether there are still remaining images in the collection** that have yet to be retrieved. Since the number of images requested with each API call is fixed at 30, we can assume that if a request for a new page returns a number of items that is not the maximum, then we have reached the end of the collection and the user should not be able to request more pics. |
+
 
 The number of the latest page of images requested is stored in a ref, since we want it to persist through renders and does not need to trigger re-renders when changed.
 
@@ -64,9 +95,13 @@ The application uses the `sessionStorage` to **avoid repeating API calls**, give
 Using the storage means that both **states are initialized through a function**: the app runs a check on the session storage and if it finds saved data, it uses it to initialize the state, otherwise it assigns a default value. The same goes for the page number ref. To keep state and storage synchronized, two `useEffect` hooks save the contents of the states into `sessionStorage` whenever they change, thanks to the dependency array.
 
 `useUnsplashPics` also exposes 3 functions:
-- `initialize()`: fetches the first page of pictures in the collection and adds them to the state, if they weren't already stored in the session storage. It's invoked from the Gallery page, the first time it is mounted.
-- `loadNextPage()`: sends an API call to retrieve the next 30 images, while updating the `page` ref and its storage counterpart. It relies on the functionality provided by `UnsplashService`.
-- `getDetails(id)`: fetches additional details about the specified picture through the `GET /photos/:id` API call implemented in the service. If the picture was also already present in the `pictures` state list, then that entry will be updated with the new data and in turn saved to the storage, so that the next time the details are requested they can be directly accessed locally instead of remotely. Delaying the request for details to when the user actually navigates to the details page is another way to try to reduce the number of API calls, given the limitations.  
+
+| Function | Description |
+|----------|-------------|
+| `initialize()` | Fetches the first page of pictures in the collection and adds them to the state, if they weren't already stored in the session storage. It's invoked from the Gallery page, the first time it is mounted. |
+| `loadNextPage()` | Sends an API call to retrieve the next 30 images, while updating the `page` ref and its storage counterpart. It relies on the functionality provided by `UnsplashService`. |
+| `getDetails(id)` | Fetches additional details about the specified picture through the `GET /photos/:id` API call implemented in the service. If the picture was also already present in the `pictures` state list, then that entry will be updated with the new data and in turn saved to the storage, so that the next time the details are requested they can be directly accessed locally instead of remotely. Delaying the request for details to when the user actually navigates to the details page is another way to try to reduce the number of API calls, given the limitations. |
+
 
 
 ### Example Scenario
@@ -78,7 +113,7 @@ This is an example of how the data is handled in Memoria.
 
 If the user decides to reload the page website, the state will be lost, but the data will still be accessible through the session storage, which means that no API calls are required to restore all the data that has already been downloaded.
 
-## UI
+## 🖥️ UI
 ### Components
 The base structure of each of the pages of the website is layed down in specific components in the `src/pages/` folder. These are also the components passed as route elements to the `HashRouter`. All the other components are stored in `/src/components/ComponentName/` folders, each one having its own `ComponentName.jsx` and `ComponentName.module.css` files.
 
@@ -123,10 +158,10 @@ The resulting effect is that the object (picture, cloud) is smoothly moved, fram
 
 The same principles apply for the `PictureScroller` component, with the differences being that the event capturing user input is the `wheel` event, and the property that is being animated is the Y position of the container of the images, or the X position on mobile.
 
-## Deployment 
+## 🚀 Deployment 
 Memoria is deployed through [Vercel](https://www.vercel.com). The service is free (with limitations), directly links to this Github repository and will run the deployment pipeline every time a new commit is pushed to the main branch. Right now, the only command that needs to be launched is `npm run build`, to create the bundle that will be sent back to clients that try to access the website. Vercel also handles environment variables: the API key for Unsplash is set directly inside the project's dashboard.
 
-## Future plans
+## 🚧 Future plans
 The website already includes the main functionalities intended for users, but is not complete as per the Figma design that was originally made.
 
 One of the main ideas that was later discarded due to time constraints was using the Three.js library to introduce some 3D elements in the website, in particular a 3D interactable polaroid in the details page, whose content would dynamically change based on the selected image. I still plan on experimenting with it.
