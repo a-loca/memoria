@@ -62,7 +62,7 @@ function FloatingPicture({ url }) {
       // Cancel the animation frame when component is unmounted
       cancelAnimationFrame(rafId.current);
     };
-  });
+  }, []);
 
   useEffect(() => {
     if (url) {
